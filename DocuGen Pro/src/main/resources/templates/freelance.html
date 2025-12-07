@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        body { font-family: sans-serif; }
+        h1 { color: #2c3e50; }
+        .section { margin-bottom: 20px; }
+        .signature { margin-top: 50px; border-top: 1px solid black; width: 40%; padding-top: 10px; }
+    </style>
+</head>
+<body>
+<h1>Freelance Service Agreement</h1>
+<p><strong>Date:</strong> <span th:text="${#temporals.format(now, 'yyyy-MM-dd')}">2023-01-01</span></p>
+
+<div class="section">
+    <h3>1. Parties</h3>
+    <p>This agreement is between <strong><span th:text="${freelancerName}">Freelancer</span></strong> and <strong><span th:text="${clientName}">Client</span></strong>.</p>
+</div>
+
+<div class="section">
+    <h3>2. Services</h3>
+    <p>The Freelancer agrees to provide: <span th:text="${serviceDescription}">Dev Services</span>.</p>
+</div>
+
+<div class="section">
+    <h3>3. Payment</h3>
+    <p>Total Amount: <strong>$<span th:text="${paymentAmount}">1000</span></strong>.</p>
+</div>
+
+<div class="section" th:if="${includeNDA}">
+    <h3>4. Confidentiality (NDA)</h3>
+    <p>The Freelancer acknowledges that they may have access to proprietary information. They agree to keep all such information confidential.</p>
+</div>
+
+<div class="signature">
+    Signature (Freelancer)
+</div>
+</body>
+</html>
