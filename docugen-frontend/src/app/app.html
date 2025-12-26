@@ -1,31 +1,155 @@
-<mat-toolbar color="primary" class="navbar">
-  <button mat-icon-button class="menu-icon" aria-label="Menu icon">
-    <mat-icon>description</mat-icon>
-  </button>
+<div class="min-h-screen flex w-full">
 
-  <span class="logo" routerLink="/">DocuGen Pro</span>
+  <!-- Left Side - Brand Section -->
+  <div class="hidden lg:flex w-1/2 bg-gradient-to-br from-brand-900 via-brand-700 to-brand-600 items-center justify-center relative overflow-hidden">
+    <!-- Animated Background Blobs -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 animate-pulse" style="animation-delay: 1s;"></div>
+    <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-white opacity-5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2 animate-pulse" style="animation-delay: 2s;"></div>
 
-  <span class="spacer"></span>
-
-  <div *ngIf="!isLoggedIn" class="nav-buttons">
-    <button mat-button routerLink="/login">Login</button>
-    <button mat-raised-button color="accent" routerLink="/register">Get Started</button>
+    <div class="relative z-10 max-w-lg px-10 text-center">
+      <div class="mb-8 flex justify-center">
+        <div class="w-20 h-20 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform duration-300">
+          <span class="material-icons text-white text-5xl">description</span>
+        </div>
+      </div>
+      <h1 class="text-5xl font-bold text-white mb-6 tracking-tight">DocuGen Pro</h1>
+      <p class="text-blue-100 text-xl leading-relaxed mb-8">
+        Automate your document workflow with precision and speed.
+        Generate contracts, invoices, and certificates in seconds.
+      </p>
+      <div class="flex justify-center gap-4 text-white/80">
+        <div class="flex items-center gap-2">
+          <span class="material-icons text-sm">check_circle</span>
+          <span class="text-sm">Secure</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="material-icons text-sm">check_circle</span>
+          <span class="text-sm">Fast</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="material-icons text-sm">check_circle</span>
+          <span class="text-sm">Reliable</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-<div *ngIf="isLoggedIn" class="nav-buttons">
-    <button mat-button routerLink="/admin/builder">
-        <mat-icon>build</mat-icon> Builder
-    </button>
+  <!-- Right Side - Login Form -->
+  <div class="flex-1 flex items-center justify-center bg-gray-50 p-8 sm:p-12 lg:p-16">
+    <div class="w-full max-w-md">
 
-    <button mat-button routerLink="/dashboard">
-      <mat-icon>dashboard</mat-icon> Dashboard
-    </button>
-    <button mat-icon-button (click)="logout()" title="Logout">
-      <mat-icon>logout</mat-icon>
-    </button>
+      <!-- Card Container -->
+      <div class="bg-white rounded-2xl shadow-2xl p-8 sm:p-10 border border-gray-100">
+
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-900 tracking-tight mb-2">Welcome back</h2>
+          <p class="text-sm text-gray-500">Please enter your details to sign in</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+          <!-- Email Field -->
+          <div class="space-y-2">
+            <label for="email" class="block text-sm font-semibold text-gray-700">Email address</label>
+            <div class="relative group">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-all group-focus-within:text-brand-600">
+                <span class="material-icons text-gray-400 text-xl group-focus-within:text-brand-600 transition-colors">email</span>
+              </div>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="you@example.com"
+                class="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200 hover:border-gray-300"
+                [class.border-red-400]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                [class.focus:ring-red-500/20]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                [class.focus:border-red-500]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+              >
+            </div>
+            <p *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+               class="text-xs text-red-600 flex items-center gap-1 mt-1.5">
+              <span class="material-icons text-xs">error</span>
+              Valid email is required
+            </p>
+          </div>
+
+          <!-- Password Field -->
+          <div class="space-y-2">
+            <label for="password" class="block text-sm font-semibold text-gray-700">Password</label>
+            <div class="relative group">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-all group-focus-within:text-brand-600">
+                <span class="material-icons text-gray-400 text-xl group-focus-within:text-brand-600 transition-colors">lock</span>
+              </div>
+              <input
+                id="password"
+                type="password"
+                formControlName="password"
+                placeholder="••••••••"
+                class="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200 hover:border-gray-300"
+              >
+            </div>
+          </div>
+
+          <!-- Error Message -->
+          <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg animate-shake">
+            <div class="flex items-center gap-3">
+              <div class="flex-shrink-0">
+                <span class="material-icons text-red-500 text-xl">error</span>
+              </div>
+              <p class="text-sm text-red-700 font-medium">{{ errorMessage }}</p>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            [disabled]="loginForm.invalid"
+            class="group relative w-full flex items-center justify-center gap-2 py-3.5 px-4 border border-transparent text-base font-semibold rounded-xl text-white bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-brand-600 disabled:hover:to-brand-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+          >
+            <span>Sign in</span>
+            <span class="material-icons text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </button>
+
+          <!-- Divider -->
+          <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-4 bg-white text-gray-500">New to DocuGen Pro?</span>
+            </div>
+          </div>
+
+          <!-- Register Link -->
+          <div class="text-center">
+            <a routerLink="/register"
+               class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:text-brand-700 hover:gap-3 transition-all duration-200">
+              Create an account
+              <span class="material-icons text-lg">arrow_forward</span>
+            </a>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Footer Info -->
+      <p class="text-center text-xs text-gray-500 mt-6">
+        Protected by enterprise-grade security
+      </p>
+
+    </div>
   </div>
-</mat-toolbar>
-
-<div class="main-container">
-  <router-outlet></router-outlet>
 </div>
+
+<style>
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
+}
+</style>
