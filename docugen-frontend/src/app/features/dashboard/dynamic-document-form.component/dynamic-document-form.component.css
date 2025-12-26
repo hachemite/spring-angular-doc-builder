@@ -1,0 +1,34 @@
+.signature-input {
+  font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+  font-size: 1.5rem;
+  color: #1a237e;
+  font-weight: 500;
+}
+
+/* Success Snackbar */
+::ng-deep .success-snackbar {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+/* Form Field Spacing */
+mat-form-field {
+  display: block;
+  margin-bottom: 0;
+}
+
+/* Card Header Override */
+mat-card-header {
+  margin-bottom: 0 !important;
+}
+
+/* Checkbox Container */
+.mat-mdc-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+/* Loading Spinner Center */
+.flex.justify-center.items-center {
+  min-height: 400px;
+}

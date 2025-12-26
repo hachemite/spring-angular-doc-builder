@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" class="navbar">
+  <button mat-icon-button class="menu-icon" aria-label="Menu icon">
+    <mat-icon>description</mat-icon>
+  </button>
+
+  <span class="logo" routerLink="/">DocuGen Pro</span>
+
+  <span class="spacer"></span>
+
+  <div *ngIf="!isLoggedIn" class="nav-buttons">
+    <button mat-button routerLink="/login">Login</button>
+    <button mat-raised-button color="accent" routerLink="/register">Get Started</button>
+  </div>
+
+<div *ngIf="isLoggedIn" class="nav-buttons">
+    <button mat-button routerLink="/admin/builder">
+        <mat-icon>build</mat-icon> Builder
+    </button>
+
+    <button mat-button routerLink="/dashboard">
+      <mat-icon>dashboard</mat-icon> Dashboard
+    </button>
+    <button mat-icon-button (click)="logout()" title="Logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<div class="main-container">
+  <router-outlet></router-outlet>
+</div>

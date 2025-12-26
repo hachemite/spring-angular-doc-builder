@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../node_modules/@angular/material/fesm2022/_input-value-accessor-chunk.mjs"],
+  "sourcesContent": ["import { InjectionToken } from '@angular/core';\n\nconst MAT_INPUT_VALUE_ACCESSOR = new InjectionToken('MAT_INPUT_VALUE_ACCESSOR');\n\nexport { MAT_INPUT_VALUE_ACCESSOR };\n\n"],
+  "mappings": ";;;;;AAEA,IAAM,2BAA2B,IAAI,eAAe,0BAA0B;",
+  "names": []
+}

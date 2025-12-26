@@ -1,0 +1,32 @@
+/* Ensure the app takes full height */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Push navigation buttons to the far right */
+.spacer {
+  flex: 1 1 auto;
+}
+
+.logo {
+  font-weight: 500;
+  margin-left: 8px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Container for the page content */
+.main-container {
+  padding: 20px;
+  flex: 1; /* Fills remaining space below toolbar */
+  background-color: #f5f5f5; /* Light gray background for contrast */
+  overflow-y: auto; /* Allow scrolling */
+}

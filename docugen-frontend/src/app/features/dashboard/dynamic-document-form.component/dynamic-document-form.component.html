@@ -1,0 +1,137 @@
+<div class="min-h-screen bg-gray-50 p-4 md:p-8">
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center h-96">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <!-- Form Content -->
+  <div *ngIf="!loading && template" class="max-w-3xl mx-auto">
+
+    <mat-card class="shadow-lg">
+
+      <!-- Header -->
+      <mat-card-header class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 -m-4 mb-6 rounded-t-lg">
+        <div class="flex items-center gap-3">
+          <mat-icon class="text-4xl">description</mat-icon>
+          <div>
+            <mat-card-title class="text-2xl font-bold text-white mb-1">{{ template.name }}</mat-card-title>
+            <mat-card-subtitle class="text-blue-100">{{ template.description }}</mat-card-subtitle>
+          </div>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content class="p-6">
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+
+          <!-- Recipient Email Section -->
+          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
+            <h3 class="text-blue-900 font-semibold mb-3 flex items-center gap-2">
+              <mat-icon class="text-blue-600">email</mat-icon>
+              Recipient Information
+            </h3>
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Recipient Email</mat-label>
+              <input matInput formControlName="recipientEmail" placeholder="client@example.com" type="email">
+              <mat-icon matPrefix class="mr-2">alternate_email</mat-icon>
+              <mat-error *ngIf="recipientControl.hasError('required')">Email is required</mat-error>
+              <mat-error *ngIf="recipientControl.hasError('email')">Please enter a valid email</mat-error>
+            </mat-form-field>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <!-- Document Details Section -->
+          <div>
+            <h3 class="text-gray-800 font-semibold text-lg mb-4 flex items-center gap-2">
+              <mat-icon class="text-gray-600">edit_document</mat-icon>
+              Document Details
+            </h3>
+
+            <div class="space-y-4">
+              <ng-container *ngFor="let field of template.fields">
+
+                <!-- TEXT Field -->
+                <mat-form-field *ngIf="field.type === 'TEXT'" appearance="outline" class="w-full">
+                  <mat-label>{{ field.label }}</mat-label>
+                  <input matInput [formControlName]="field.variableName" type="text">
+                  <mat-error>{{ field.label }} is required</mat-error>
+                </mat-form-field>
+
+                <!-- NUMBER Field -->
+                <mat-form-field *ngIf="field.type === 'NUMBER'" appearance="outline" class="w-full">
+                  <mat-label>{{ field.label }}</mat-label>
+                  <input matInput [formControlName]="field.variableName" type="number">
+                  <mat-icon matPrefix>tag</mat-icon>
+                  <mat-error>{{ field.label }} is required</mat-error>
+                </mat-form-field>
+
+                <!-- DATE Field -->
+                <mat-form-field *ngIf="field.type === 'DATE'" appearance="outline" class="w-full">
+                  <mat-label>{{ field.label }}</mat-label>
+                  <input matInput [matDatepicker]="picker" [formControlName]="field.variableName">
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error>{{ field.label }} is required</mat-error>
+                </mat-form-field>
+
+                <!-- SELECT Field -->
+                <mat-form-field *ngIf="field.type === 'SELECT'" appearance="outline" class="w-full">
+                  <mat-label>{{ field.label }}</mat-label>
+                  <mat-select [formControlName]="field.variableName">
+                    <mat-option *ngFor="let opt of getOptions(field.options)" [value]="opt">
+                      {{ opt }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>{{ field.label }} is required</mat-error>
+                </mat-form-field>
+
+                <!-- CHECKBOX Field -->
+                <div *ngIf="field.type === 'CHECKBOX'" class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <mat-checkbox [formControlName]="field.variableName" color="primary" class="text-base">
+                    {{ field.label }}
+                  </mat-checkbox>
+                </div>
+
+                <!-- SIGNATURE Field -->
+                <mat-form-field *ngIf="field.type === 'SIGNATURE'" appearance="outline" class="w-full">
+                  <mat-label>{{ field.label }}</mat-label>
+                  <input matInput [formControlName]="field.variableName" class="signature-input">
+                  <mat-icon matSuffix class="text-blue-500">draw</mat-icon>
+                  <mat-hint>Type your name to sign</mat-hint>
+                  <mat-error>{{ field.label }} is required</mat-error>
+                </mat-form-field>
+
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-6 border-t border-gray-200">
+            <button mat-raised-button color="primary" type="submit"
+                    class="w-full py-3 text-lg"
+                    [disabled]="form.invalid || isSubmitting">
+              <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+              <mat-spinner *ngIf="isSubmitting" diameter="20" class="inline-block mr-2"></mat-spinner>
+              {{ isSubmitting ? 'Generating...' : 'Generate & Send Document' }}
+            </button>
+          </div>
+
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!loading && !template" class="max-w-3xl mx-auto">
+    <mat-card class="text-center p-10">
+      <mat-icon class="text-6xl text-red-400 mb-4">error_outline</mat-icon>
+      <h2 class="text-2xl text-gray-700 mb-2">Template Not Found</h2>
+      <p class="text-gray-500">The requested template could not be loaded.</p>
+    </mat-card>
+  </div>
+
+</div>

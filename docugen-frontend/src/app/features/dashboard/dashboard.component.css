@@ -1,0 +1,52 @@
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.doc-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+}
+
+.row mat-form-field {
+  flex: 1;
+}
+
+.divider {
+  margin: 1.5rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+h3 {
+  color: #3f51b5; /* Primary Material Color */
+  margin-bottom: 1rem;
+}
+
+/* Animations for smooth toggling */
+.dynamic-section {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

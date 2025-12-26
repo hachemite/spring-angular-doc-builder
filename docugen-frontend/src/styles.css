@@ -1,0 +1,22 @@
+/* @import rules must come FIRST, before any other CSS rules or Tailwind directives */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* 1. Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 3. Global Resets & Typography */
+html, body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #f3f4f6;
+}
+
+/* 4. Utility Classes */
+.mat-mdc-card {
+    background-color: white;
+}
