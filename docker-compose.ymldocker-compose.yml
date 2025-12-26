@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # 1. Database Service (PostgreSQL)
+  db:
+    image: postgres:16-alpine
+    container_name: docugen_postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=docugen_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Email Service (MailHog)
+  # This catches emails sent to localhost:1025 so you can view them in a browser
+  mailhog:
+    image: mailhog/mailhog
+    container_name: docugen_mailhog
+    ports:
+      - "1025:1025" # SMTP server (matches your spring.mail.port)
+      - "8025:8025" # Web UI to view emails
+    logging:
+      driver: 'none'  # Optional: keeps logs clean
+
+volumes:
+  postgres_data:

@@ -19,7 +19,6 @@ import java.util.function.Function;
 public class JwtService {
 
     // In production, move this to application.properties
-    // This key must be at least 256-bit (32 bytes) hex encoded
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 
     public String extractUsername(String token) {
@@ -31,8 +30,11 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    // ENHANCED: Include role in JWT claims
+    public String generateToken(UserDetails userDetails, String role) {
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", role);
+        return generateToken(extraClaims, userDetails);
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {

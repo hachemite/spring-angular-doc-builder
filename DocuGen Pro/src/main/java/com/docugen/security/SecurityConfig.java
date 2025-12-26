@@ -14,6 +14,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -27,29 +28,55 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // 1. Disable CSRF (Stateful sessions not used)
                 .csrf(AbstractHttpConfigurer::disable)
-                // ADD THIS LINE: Enable CORS with our configuration source
+
+                // 2. Enable CORS (Allow Angular localhost:4200)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                // 3. Define URL Access Rules (Order matters!)
                 .authorizeHttpRequests(auth -> auth
+                        // Public Endpoints
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        // Admin Only Endpoints (Matches AdminTemplateController)
+                        // hasRole("ADMIN") checks for authority "ROLE_ADMIN"
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // User & Admin Endpoints (Document Generation, Public Templates)
+                        .requestMatchers("/api/documents/**", "/api/templates/**").authenticated()
+
+                        // Catch-all
                         .anyRequest().authenticated()
                 )
+
+                // 4. stateless Session Management
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+
+                // 5. Auth Provider & Filter
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // ADD THIS BEAN: Configures allowed origins (Angular)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Allow Angular
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+
+        // Allow Frontend Origin
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+
+        // Allow HTTP Methods
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // Allow Headers (Authorization is crucial for JWT)
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cache-Control"));
+
+        // Allow credentials (optional for Authorization header, but good practice)
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

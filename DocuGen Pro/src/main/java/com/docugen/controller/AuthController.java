@@ -42,15 +42,16 @@ public class AuthController {
 
         userRepository.save(user);
 
-        // Generate token immediately upon registration
-        // We need to load UserDetails for the token generation
+        // Generate token with role included
         var userDetails = new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                java.util.Collections.emptyList()
+                java.util.Collections.singleton(
+                        new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_" + user.getRole().name())
+                )
         );
 
-        var jwtToken = jwtService.generateToken(userDetails);
+        var jwtToken = jwtService.generateToken(userDetails, user.getRole().name());
         return ResponseEntity.ok(AuthResponse.builder().token(jwtToken).build());
     }
 
@@ -63,18 +64,18 @@ public class AuthController {
                 )
         );
 
-        // If we get here, authentication was successful
-        // Load UserDetails to generate token
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
         var userDetails = new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                java.util.Collections.emptyList()
+                java.util.Collections.singleton(
+                        new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_" + user.getRole().name())
+                )
         );
 
-        var jwtToken = jwtService.generateToken(userDetails);
+        var jwtToken = jwtService.generateToken(userDetails, user.getRole().name());
         return ResponseEntity.ok(AuthResponse.builder().token(jwtToken).build());
     }
 }
