@@ -40,6 +40,7 @@ export class TemplateBuilderComponent {
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
 
+  exampleCode = '<span th:text="${variable_name}"></span>';
   // Enum values for the dropdown
   fieldTypes = ['TEXT', 'NUMBER', 'DATE', 'SELECT', 'CHECKBOX', 'SIGNATURE'];
 

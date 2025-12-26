@@ -1,22 +1,112 @@
-/* @import rules must come FIRST, before any other CSS rules or Tailwind directives */
+/* 1. Imports MUST come first to stop the build warning */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* 1. Tailwind Directives */
+/* 2. Tailwind Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 3. Global Resets & Typography */
+/* 3. Global Styles */
 html, body {
     height: 100%;
-}
-body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: #f3f4f6;
+    font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif;
+    background-color: #f8fafc;
 }
 
-/* 4. Utility Classes */
+/* ==========================================================================
+   REPAIR KIT: Fix Angular Material 15+ vs Tailwind Conflicts (FILL VERSION)
+   ========================================================================== */
+
+/* FIX 1: Force all form fields to take full width */
+.mat-mdc-form-field,
+mat-form-field {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.mat-mdc-text-field-wrapper,
+.mdc-text-field {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.mat-mdc-form-field-infix,
+.mdc-text-field__input {
+    width: 100% !important;
+    min-width: 100% !important;
+    flex: 1 1 100% !important;
+}
+
+.mat-mdc-form-field-flex {
+    width: 100% !important;
+}
+
+input.mat-mdc-input-element,
+textarea.mat-mdc-input-element,
+select.mat-mdc-input-element,
+.mat-input-element {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+}
+
+.mat-mdc-select,
+.mat-select {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.mat-mdc-select-trigger {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+textarea.mat-mdc-input-element {
+    resize: vertical !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* FIX 2: Fix Icon Alignment */
+.mat-mdc-form-field-icon-prefix,
+.mat-mdc-form-field-icon-suffix {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* FIX 3: Visual Polish for Cards */
 .mat-mdc-card {
-    background-color: white;
+    background-color: white !important;
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important; /* Tailwind gray-200 */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
+}
+
+/* FIX 4: Fix datepicker input width */
+.mat-datepicker-input {
+    width: 100% !important;
+}
+
+/* FIX 5: Fix checkbox alignment */
+.mat-mdc-checkbox {
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* FIX 6: Style fill form fields for better appearance */
+.mat-mdc-form-field.mat-form-field-appearance-fill .mat-mdc-text-field-wrapper {
+    background-color: #f3f4f6 !important; /* Tailwind gray-100 */
+}
+
+.mat-mdc-form-field.mat-form-field-appearance-fill .mat-mdc-text-field-wrapper:hover {
+    background-color: #e5e7eb !important; /* Tailwind gray-200 on hover */
+}
+
+.mat-mdc-form-field.mat-form-field-appearance-fill.mat-focused .mat-mdc-text-field-wrapper {
+    background-color: #dbeafe !important; /* Tailwind blue-100 when focused */
 }

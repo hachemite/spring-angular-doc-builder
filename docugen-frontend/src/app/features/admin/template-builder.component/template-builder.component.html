@@ -1,165 +1,163 @@
-<div class="min-h-screen bg-gray-50 p-4 md:p-8">
+<div class="min-h-screen bg-gray-50 p-6">
 
-  <div class="max-w-7xl mx-auto mb-6 flex justify-between items-center">
+  <div class="max-w-7xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
     <div>
-      <h1 class="text-3xl font-light text-gray-800">Template Builder</h1>
-      <p class="text-gray-500 text-sm">Design dynamic document templates for your team.</p>
+      <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Template Builder</h1>
+      <p class="text-gray-500">Design dynamic document templates.</p>
     </div>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="templateForm.invalid" class="px-6">
-      <mat-icon>save</mat-icon> Save Template
+    <button mat-raised-button color="primary" class="px-8 py-2"
+            (click)="onSubmit()" [disabled]="templateForm.invalid">
+      <mat-icon class="mr-2">save</mat-icon> Save Template
     </button>
   </div>
 
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-    <div class="lg:col-span-8 flex flex-col gap-6">
+    <div class="lg:col-span-2 space-y-8">
 
-      <mat-card appearance="outlined" class="bg-white shadow-sm">
-        <mat-card-header>
-          <mat-card-title>General Information</mat-card-title>
+      <mat-card class="p-4">
+        <mat-card-header class="mb-4">
+          <mat-card-title>1. General Information</mat-card-title>
         </mat-card-header>
-        <mat-card-content class="p-4 pt-6 flex flex-col gap-4">
+        <mat-card-content>
           <form [formGroup]="templateForm" class="flex flex-col gap-4">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <mat-form-field appearance="outline" class="w-full">
+            <div class="w-full">
+              <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
                 <mat-label>Template Name</mat-label>
                 <input matInput formControlName="name" placeholder="e.g. Non-Disclosure Agreement">
                 <mat-error>Name is required</mat-error>
               </mat-form-field>
+            </div>
 
-              <mat-form-field appearance="outline" class="w-full">
+            <div class="w-full">
+              <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
                 <mat-label>Description</mat-label>
-                <input matInput formControlName="description" placeholder="Brief summary of this doc">
+                <input matInput formControlName="description" placeholder="Brief summary">
               </mat-form-field>
             </div>
 
-            <mat-checkbox formControlName="active" color="primary">Active (Visible to Users)</mat-checkbox>
+            <mat-checkbox formControlName="active" color="primary">Active (Visible to users)</mat-checkbox>
           </form>
         </mat-card-content>
       </mat-card>
 
-      <mat-card appearance="outlined" class="bg-white shadow-sm">
-        <mat-card-header>
-          <mat-card-title>Document Content (HTML)</mat-card-title>
+      <mat-card class="p-4">
+        <mat-card-header class="mb-4">
+          <mat-card-title>2. Document Content (HTML)</mat-card-title>
         </mat-card-header>
-        <mat-card-content class="p-4">
+        <mat-card-content>
 
-          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded-r" ngNonBindable>
-            <div class="flex items-start">
-              <mat-icon class="text-blue-500 mr-2">info</mat-icon>
+          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r">
+            <div class="flex">
+              <mat-icon class="text-blue-500 mr-3">info</mat-icon>
               <div class="text-sm text-blue-900">
-                <p class="font-bold">How to use variables:</p>
-                <p>Use Thymeleaf syntax to inject field values. Example:</p>
-                <code class="bg-blue-100 px-2 py-1 rounded text-xs mt-1 block w-fit">
-                  &lt;span th:text="$&#123;client_name&#125;"&gt;Default Value&lt;/span&gt;
-                </code>
+                <p class="font-bold">Usage Tip:</p>
+                <p>Use Thymeleaf syntax. Example: <code class="font-mono bg-blue-100 px-1 rounded">{{ exampleCode }}</code></p>
               </div>
             </div>
           </div>
 
           <form [formGroup]="templateForm">
-            <mat-form-field appearance="outline" class="w-full">
-              <mat-label>HTML Code</mat-label>
-              <textarea matInput formControlName="contentHtml"
-                        class="font-mono text-sm leading-relaxed min-h-[400px]"
-                        placeholder="<html><body><h1>Title</h1>...</body></html>"></textarea>
-              <mat-hint align="end">{{ templateForm.get('contentHtml')?.value?.length || 0 }} chars</mat-hint>
-            </mat-form-field>
+            <div class="w-full">
+              <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
+                <mat-label>HTML Code</mat-label>
+                <textarea matInput formControlName="contentHtml"
+                          class="font-mono text-sm leading-relaxed"
+                          style="min-height: 400px;"
+                          placeholder="<html><body>...</body></html>"></textarea>
+              </mat-form-field>
+            </div>
           </form>
         </mat-card-content>
       </mat-card>
 
-      <mat-card appearance="outlined" class="bg-white shadow-sm">
-        <mat-card-header>
-          <mat-card-title>
-            Configured Fields
-            <span class="ml-2 bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">{{ fieldsArray.length }}</span>
-          </mat-card-title>
+      <mat-card class="p-4">
+        <mat-card-header class="mb-4">
+          <mat-card-title>3. Configured Fields ({{ fieldsArray.length }})</mat-card-title>
         </mat-card-header>
-        <mat-card-content class="p-4">
-
+        <mat-card-content>
           @if (fieldsArray.length === 0) {
-            <div class="flex flex-col items-center justify-center py-10 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
-              <mat-icon class="text-gray-400 text-5xl h-12 w-12 mb-2">list_alt</mat-icon>
-              <p class="text-gray-500 font-medium">No fields defined yet.</p>
-              <p class="text-gray-400 text-sm">Use the panel on the right to add fields.</p>
+            <div class="flex flex-col items-center justify-center py-10 border-2 border-dashed border-gray-300 rounded-lg">
+              <mat-icon class="text-gray-400 text-4xl mb-2">playlist_add</mat-icon>
+              <p class="text-gray-500">No fields defined yet.</p>
             </div>
           } @else {
             <div class="space-y-3">
               @for (field of fieldsArray.controls; track field; let i = $index) {
-                <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-300 transition-colors shadow-sm">
-
+                <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                   <div class="flex items-center gap-4">
-                    <div class="bg-blue-100 text-blue-700 h-8 w-8 rounded-full flex items-center justify-center font-bold text-xs">
+                    <div class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
                       {{ i + 1 }}
                     </div>
                     <div>
-                      <h4 class="font-medium text-gray-900 m-0">{{ field.get('label')?.value }}</h4>
-                      <div class="flex gap-2 text-xs text-gray-500 mt-1">
-                        <span class="bg-gray-100 px-2 py-0.5 rounded font-mono">var: {{ field.get('variableName')?.value }}</span>
-                        <span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded font-mono border border-purple-100">{{ field.get('type')?.value }}</span>
-                      </div>
+                      <p class="font-medium text-gray-900">{{ field.get('label')?.value }}</p>
+                      <p class="text-xs text-gray-500 font-mono">
+                        {{ field.get('variableName')?.value }} ({{ field.get('type')?.value }})
+                      </p>
                     </div>
                   </div>
-
-                  <button mat-icon-button color="warn" (click)="removeField(i)" matTooltip="Remove Field">
-                    <mat-icon>delete_outline</mat-icon>
+                  <button mat-icon-button color="warn" (click)="removeField(i)">
+                    <mat-icon>delete</mat-icon>
                   </button>
                 </div>
               }
             </div>
           }
-
         </mat-card-content>
       </mat-card>
 
     </div>
 
-    <div class="lg:col-span-4">
-      <div class="sticky top-6"> <mat-card appearance="raised" class="bg-white border-t-4 border-t-blue-500 shadow-md">
-          <mat-card-header>
-            <mat-card-title class="pt-2">Add New Field</mat-card-title>
+    <div class="lg:col-span-1">
+      <div class="sticky top-6">
+        <mat-card class="p-4 border-t-4 border-blue-600 shadow-xl">
+          <mat-card-header class="mb-4">
+            <mat-card-title class="text-lg font-bold">Field Toolbox</mat-card-title>
           </mat-card-header>
-          <mat-card-content class="p-4">
-
+          <mat-card-content>
             <form [formGroup]="addFieldForm" class="flex flex-col gap-4">
 
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Field Label</mat-label>
-                <input matInput formControlName="label" placeholder="e.g. Client Name">
-              </mat-form-field>
+              <div class="w-full">
+                <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
+                  <mat-label>Label</mat-label>
+                  <input matInput formControlName="label" placeholder="e.g. Client Name">
+                </mat-form-field>
+              </div>
 
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Variable Name</mat-label>
-                <input matInput formControlName="variableName" placeholder="e.g. client_name">
-                <mat-hint>Used in HTML ({{ '{' }}{{ '{' }}var{{ '}' }}{{ '}' }})</mat-hint>
-              </mat-form-field>
+              <div class="w-full">
+                <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
+                  <mat-label>Variable Name</mat-label>
+                  <input matInput formControlName="variableName" placeholder="e.g. client_name">
+                  <mat-hint>Use underscores, no spaces</mat-hint>
+                </mat-form-field>
+              </div>
 
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Input Type</mat-label>
-                <mat-select formControlName="type">
-                  @for (type of fieldTypes; track type) {
-                    <mat-option [value]="type">{{ type }}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
+              <div class="w-full">
+                <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
+                  <mat-label>Input Type</mat-label>
+                  <mat-select formControlName="type">
+                    @for (type of fieldTypes; track type) {
+                      <mat-option [value]="type">{{ type }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
 
               @if (addFieldForm.get('type')?.value === 'SELECT') {
-                <mat-form-field appearance="outline" class="w-full">
-                  <mat-label>Options (Comma Separated)</mat-label>
-                  <input matInput formControlName="options" placeholder="Option A, Option B, Option C">
-                  <mat-hint>Example: Red, Green, Blue</mat-hint>
-                </mat-form-field>
+                <div class="w-full">
+                  <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
+                    <mat-label>Options (Comma Separated)</mat-label>
+                    <input matInput formControlName="options" placeholder="A, B, C">
+                  </mat-form-field>
+                </div>
               }
 
-              <div class="mt-2">
-                <button mat-flat-button color="accent" class="w-full py-6"
-                        (click)="addFieldToParams()"
-                        [disabled]="addFieldForm.invalid">
-                  <mat-icon>add_circle</mat-icon> Add to Template
-                </button>
-              </div>
+              <button mat-flat-button color="primary" class="w-full py-2"
+                      (click)="addFieldToParams()"
+                      [disabled]="addFieldForm.invalid">
+                <mat-icon>add</mat-icon> Add Field
+              </button>
 
             </form>
           </mat-card-content>
