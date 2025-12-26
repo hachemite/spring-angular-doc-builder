@@ -18,6 +18,7 @@ function coerceElement(elementOrRef) {
 
 export {
   coerceNumberProperty,
+  _isNumberValue,
   coerceElement
 };
-//# sourceMappingURL=chunk-UI3LMDDM.js.map
+//# sourceMappingURL=chunk-JNDW6UKT.js.map

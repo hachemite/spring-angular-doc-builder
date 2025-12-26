@@ -1,25 +1,25 @@
 import {
+  BreakpointObserver
+} from "./chunk-G3Z44WVT.js";
+import {
   _getEventTarget,
   _getFocusedElementPierceShadowDom,
   _getShadowRoot,
   normalizePassiveListenerOptions
-} from "./chunk-SY4YB4SL.js";
+} from "./chunk-ASEBZ276.js";
 import {
   _VisuallyHiddenLoader
 } from "./chunk-NIKKJSKC.js";
 import {
-  BreakpointObserver
-} from "./chunk-G3Z44WVT.js";
-import {
   _CdkPrivateStyleLoader
 } from "./chunk-SOGSEAAQ.js";
 import {
-  coerceElement,
-  coerceNumberProperty
-} from "./chunk-UI3LMDDM.js";
-import {
   Platform
 } from "./chunk-T4RA5O6U.js";
+import {
+  coerceElement,
+  coerceNumberProperty
+} from "./chunk-JNDW6UKT.js";
 import {
   APP_ID,
   DOCUMENT,
@@ -91,6 +91,14 @@ var A = 65;
 var Z = 90;
 var META = 91;
 var MAC_META = 224;
+
+// node_modules/@angular/cdk/fesm2022/keycodes.mjs
+function hasModifierKey(event, ...modifiers) {
+  if (modifiers.length) {
+    return modifiers.some((modifier) => event[modifier]);
+  }
+  return event.altKey || event.shiftKey || event.ctrlKey || event.metaKey;
+}
 
 // node_modules/@angular/cdk/fesm2022/_fake-event-detection-chunk.mjs
 function isFakeMousedownFromScreenReader(event) {
@@ -1456,14 +1464,6 @@ var _IdGenerator = class __IdGenerator {
   }], null, null);
 })();
 
-// node_modules/@angular/cdk/fesm2022/keycodes.mjs
-function hasModifierKey(event, ...modifiers) {
-  if (modifiers.length) {
-    return modifiers.some((modifier) => event[modifier]);
-  }
-  return event.altKey || event.shiftKey || event.ctrlKey || event.metaKey;
-}
-
 // node_modules/@angular/cdk/fesm2022/_typeahead-chunk.mjs
 var DEFAULT_TYPEAHEAD_DEBOUNCE_INTERVAL_MS = 200;
 var Typeahead = class {
@@ -1799,6 +1799,21 @@ var ActiveDescendantKeyManager = class extends ListKeyManager {
     super.setActiveItem(index);
     if (this.activeItem) {
       this.activeItem.setActiveStyles();
+    }
+  }
+};
+
+// node_modules/@angular/cdk/fesm2022/_focus-key-manager-chunk.mjs
+var FocusKeyManager = class extends ListKeyManager {
+  _origin = "program";
+  setFocusOrigin(origin) {
+    this._origin = origin;
+    return this;
+  }
+  setActiveItem(item) {
+    super.setActiveItem(item);
+    if (this.activeItem) {
+      this.activeItem.focus(this._origin);
     }
   }
 };
@@ -2399,8 +2414,6 @@ var ConfigurableFocusTrapFactory = class _ConfigurableFocusTrapFactory {
 })();
 
 export {
-  isFakeMousedownFromScreenReader,
-  isFakeTouchstartFromScreenReader,
   BACKSPACE,
   ENTER,
   ESCAPE,
@@ -2414,17 +2427,21 @@ export {
   RIGHT_ARROW,
   DOWN_ARROW,
   A,
+  hasModifierKey,
+  isFakeMousedownFromScreenReader,
+  isFakeTouchstartFromScreenReader,
   FocusMonitor,
   CdkMonitorFocus,
+  CdkObserveContent,
   ObserversModule,
   CdkTrapFocus,
   LiveAnnouncer,
   A11yModule,
   _IdGenerator,
-  hasModifierKey,
   ActiveDescendantKeyManager,
+  FocusKeyManager,
   addAriaReferencedId,
   removeAriaReferencedId,
   AriaDescriber
 };
-//# sourceMappingURL=chunk-SLWCSHXT.js.map
+//# sourceMappingURL=chunk-LWZTX6WA.js.map

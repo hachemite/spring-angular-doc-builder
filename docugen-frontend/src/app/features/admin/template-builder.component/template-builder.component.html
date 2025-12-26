@@ -1,14 +1,33 @@
-<div class="min-h-screen bg-gray-50 p-6">
+<div class="min-h-screen bg-gray-50 p-6 relative">
+
+  <div *ngIf="isLoading" class="absolute inset-0 bg-white/80 z-50 flex items-center justify-center">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
 
   <div class="max-w-7xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Template Builder</h1>
-      <p class="text-gray-500">Design dynamic document templates.</p>
+      <h1 class="text-3xl font-bold text-gray-900 tracking-tight">
+        {{ isEditMode ? 'Edit Template' : 'Create Template' }}
+      </h1>
+      <p class="text-gray-500">
+        {{ isEditMode ? 'Modify existing document logic and fields.' : 'Design dynamic document templates manually or with AI.' }}
+      </p>
     </div>
-    <button mat-raised-button color="primary" class="px-8 py-2"
-            (click)="onSubmit()" [disabled]="templateForm.invalid">
-      <mat-icon class="mr-2">save</mat-icon> Save Template
-    </button>
+
+    <div class="flex gap-3">
+      <button *ngIf="!isEditMode" mat-flat-button class="bg-purple-600 text-white hover:bg-purple-700"
+              (click)="openAiPrompt()"
+              [disabled]="isAiLoading">
+        <mat-icon *ngIf="!isAiLoading">auto_awesome</mat-icon>
+        <mat-spinner *ngIf="isAiLoading" diameter="20" class="mr-2"></mat-spinner>
+        {{ isAiLoading ? 'Generating...' : 'Generate with AI' }}
+      </button>
+
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="templateForm.invalid">
+        <mat-icon>save</mat-icon>
+        {{ isEditMode ? 'Update Template' : 'Save Template' }}
+      </button>
+    </div>
   </div>
 
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -23,10 +42,9 @@
           <form [formGroup]="templateForm" class="flex flex-col gap-4">
 
             <div class="w-full">
-              <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
+               <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
                 <mat-label>Template Name</mat-label>
                 <input matInput formControlName="name" placeholder="e.g. Non-Disclosure Agreement">
-                <mat-error>Name is required</mat-error>
               </mat-form-field>
             </div>
 
@@ -42,34 +60,42 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="p-4">
-        <mat-card-header class="mb-4">
-          <mat-card-title>2. Document Content (HTML)</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
+      <mat-card class="p-0 overflow-hidden">
+        <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start">
 
-          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r">
-            <div class="flex">
-              <mat-icon class="text-blue-500 mr-3">info</mat-icon>
-              <div class="text-sm text-blue-900">
-                <p class="font-bold">Usage Tip:</p>
-                <p>Use Thymeleaf syntax. Example: <code class="font-mono bg-blue-100 px-1 rounded">{{ exampleCode }}</code></p>
+          <mat-tab label="HTML Editor">
+            <div class="p-6">
+              <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded-r" ngNonBindable>
+                <div class="flex">
+                  <mat-icon class="text-blue-500 mr-3">info</mat-icon>
+                  <div class="text-sm text-blue-900">
+                    <p class="font-bold">Usage Tip:</p>
+                    <p>Use Thymeleaf syntax. Example: <code class="font-mono bg-blue-100 px-1 rounded">{{ exampleCode }}</code></p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <form [formGroup]="templateForm">
-            <div class="w-full">
-              <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
-                <mat-label>HTML Code</mat-label>
-                <textarea matInput formControlName="contentHtml"
-                          class="font-mono text-sm leading-relaxed"
-                          style="min-height: 400px;"
-                          placeholder="<html><body>...</body></html>"></textarea>
-              </mat-form-field>
+              <form [formGroup]="templateForm">
+                <div class="w-full">
+                  <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
+                    <mat-label>HTML Code</mat-label>
+                    <textarea matInput formControlName="contentHtml"
+                              class="font-mono text-sm leading-relaxed"
+                              style="min-height: 400px;"
+                              placeholder="<html><body>...</body></html>"></textarea>
+                  </mat-form-field>
+                </div>
+              </form>
             </div>
-          </form>
-        </mat-card-content>
+          </mat-tab>
+
+          <mat-tab label="Preview">
+            <div class="p-8 bg-white min-h-[400px] border border-gray-100 m-4 rounded shadow-inner"
+                 [innerHTML]="templateForm.get('contentHtml')?.value">
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
       </mat-card>
 
       <mat-card class="p-4">

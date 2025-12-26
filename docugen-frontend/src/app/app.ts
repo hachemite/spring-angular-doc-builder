@@ -36,9 +36,8 @@ import { AuthService } from './core/service/auth';
       </div>
 
       <div *ngIf="isLoggedIn" class="nav-buttons">
-        <!-- Only show Builder button to admins -->
-        <button *ngIf="isAdmin" mat-button routerLink="/admin/builder">
-          <mat-icon>build</mat-icon> Builder
+        <button *ngIf="isAdmin" mat-button routerLink="/admin/templates">
+          <mat-icon>settings</mat-icon> Admin Templates
         </button>
 
         <button mat-button routerLink="/dashboard">
