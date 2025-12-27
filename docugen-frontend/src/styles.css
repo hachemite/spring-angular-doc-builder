@@ -1,112 +1,107 @@
-/* 1. Imports MUST come first to stop the build warning */
+/* ==========================================================================
+   1. CORE IMPORTS & TAILWIND
+   ========================================================================== */
+/* Angular Material Theme - Must be first */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* 2. Tailwind Directives */
+/* Tailwind Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 3. Global Styles */
+/* ==========================================================================
+   2. GLOBAL RESETS
+   ========================================================================== */
 html, body {
     height: 100%;
     margin: 0;
     font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif;
-    background-color: #f8fafc;
+    background-color: #f8fafc; /* Tailwind slate-50 */
 }
 
 /* ==========================================================================
-   REPAIR KIT: Fix Angular Material 15+ vs Tailwind Conflicts (FILL VERSION)
+   3. REPAIR KIT: Material 16+ MDC vs Tailwind Conflicts
    ========================================================================== */
 
-/* FIX 1: Force all form fields to take full width */
-.mat-mdc-form-field,
-mat-form-field {
+/* FIX: Force Form Fields to always fill their container */
+.mat-mdc-form-field {
     display: block !important;
     width: 100% !important;
-    max-width: 100% !important;
 }
 
-.mat-mdc-text-field-wrapper,
-.mdc-text-field {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
-.mat-mdc-form-field-infix,
-.mdc-text-field__input {
-    width: 100% !important;
-    min-width: 100% !important;
-    flex: 1 1 100% !important;
-}
-
-.mat-mdc-form-field-flex {
+/* FIX: The Wrapper must act as a flex container */
+.mat-mdc-text-field-wrapper {
+    display: flex !important;
+    align-items: center !important;
     width: 100% !important;
 }
 
-input.mat-mdc-input-element,
-textarea.mat-mdc-input-element,
-select.mat-mdc-input-element,
-.mat-input-element {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    margin: 0 !important;
+/* FIX: The Infix (where the input lives) needs to grow but not overflow */
+.mat-mdc-form-field-infix {
+    width: auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important; /* CRITICAL: Prevents flex items from overflowing */
 }
 
-.mat-mdc-select,
-.mat-select {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
+/* FIX: Ensure Inputs take full width of the infix */
+.mat-mdc-input-element,
 .mat-mdc-select-trigger {
     width: 100% !important;
-    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-textarea.mat-mdc-input-element {
-    resize: vertical !important;
-    min-width: 100% !important;
-    max-width: 100% !important;
-}
-
-/* FIX 2: Fix Icon Alignment */
+/* FIX: Icons/Suffixes/Prefixes - Prevent wrapping and center them */
 .mat-mdc-form-field-icon-prefix,
-.mat-mdc-form-field-icon-suffix {
+.mat-mdc-form-field-icon-suffix,
+.mat-datepicker-toggle {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    white-space: nowrap !important;
 }
 
-/* FIX 3: Visual Polish for Cards */
-.mat-mdc-card {
-    background-color: white !important;
-    border-radius: 12px !important;
-    border: 1px solid #e2e8f0 !important; /* Tailwind gray-200 */
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
-}
-
-/* FIX 4: Fix datepicker input width */
-.mat-datepicker-input {
-    width: 100% !important;
-}
-
-/* FIX 5: Fix checkbox alignment */
+/* FIX: Checkbox Alignment */
 .mat-mdc-checkbox {
+    display: inline-flex !important;
+}
+.mat-mdc-checkbox .mdc-form-field {
     display: flex !important;
     align-items: center !important;
 }
 
-/* FIX 6: Style fill form fields for better appearance */
+/* ==========================================================================
+   4. VISUAL POLISH: "Modern SaaS" Look
+   ========================================================================== */
+
+/* CARD: Clean white card with shadow */
+.mat-mdc-card {
+    background-color: white !important;
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important; /* slate-200 */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
+}
+
+/* INPUTS: Remove the ugly underline ripple */
+.mat-mdc-form-field-focus-overlay { opacity: 0 !important; }
+.mdc-line-ripple { display: none !important; }
+
+/* INPUTS: Default State (Slate-100 bg, Rounded) */
 .mat-mdc-form-field.mat-form-field-appearance-fill .mat-mdc-text-field-wrapper {
-    background-color: #f3f4f6 !important; /* Tailwind gray-100 */
+    background-color: #f1f5f9 !important; /* slate-100 */
+    border-radius: 8px !important;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
 }
 
+/* INPUTS: Hover State (Slate-200 bg) */
 .mat-mdc-form-field.mat-form-field-appearance-fill .mat-mdc-text-field-wrapper:hover {
-    background-color: #e5e7eb !important; /* Tailwind gray-200 on hover */
+    background-color: #e2e8f0 !important; /* slate-200 */
 }
 
+/* INPUTS: Focus State (White bg + Blue Ring) */
 .mat-mdc-form-field.mat-form-field-appearance-fill.mat-focused .mat-mdc-text-field-wrapper {
-    background-color: #dbeafe !important; /* Tailwind blue-100 when focused */
+    background-color: #ffffff !important;
+    outline: 2px solid #3b82f6 !important; /* blue-500 */
+    outline-offset: -1px; /* Pulls the outline inside slightly */
 }
