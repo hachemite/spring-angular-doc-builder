@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +14,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
 
-    // In production, move this to application.properties
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 
     public String extractUsername(String token) {
@@ -30,10 +30,25 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    // ENHANCED: Include role in JWT claims
+    // FIXED: Include authorities directly in the token
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> extraClaims = new HashMap<>();
+
+        // Extract roles/authorities from UserDetails
+        String authorities = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        extraClaims.put("authorities", authorities);
+
+        return generateToken(extraClaims, userDetails);
+    }
+
+    // Keep this for backward compatibility
     public String generateToken(UserDetails userDetails, String role) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", role);
+        extraClaims.put("authorities", "ROLE_" + role);
         return generateToken(extraClaims, userDetails);
     }
 
@@ -60,7 +75,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()

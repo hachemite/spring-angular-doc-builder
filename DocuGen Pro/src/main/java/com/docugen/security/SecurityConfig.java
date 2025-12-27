@@ -1,5 +1,6 @@
 package com.docugen.security;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -25,40 +27,47 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // 1. Disable CSRF (Stateful sessions not used)
                 .csrf(AbstractHttpConfigurer::disable)
-
-                // 2. Enable CORS (Allow Angular localhost:4200)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
-                // 3. Define URL Access Rules (Order matters!)
                 .authorizeHttpRequests(auth -> auth
-                        // Public Endpoints
+                        // 1. Allow OPTIONS requests for CORS preflight checks (Fixes the 403 on browser)
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // 2. Public Endpoints
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // Admin Only Endpoints (Matches AdminTemplateController)
-                        // hasRole("ADMIN") checks for authority "ROLE_ADMIN"
+                        // 3. Admin Only Endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
-                        // User & Admin Endpoints (Document Generation, Public Templates)
+                        // 4. User & Admin Endpoints
                         .requestMatchers("/api/documents/**", "/api/templates/**").authenticated()
 
-                        // Catch-all
+                        // 5. Catch-all
                         .anyRequest().authenticated()
                 )
-
-                // 4. stateless Session Management
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
-                // 5. Auth Provider & Filter
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
+        // Temporarily add debug logging
+        http.addFilterBefore(
+                (request, response, chain) -> {
+                    System.out.println("=== SECURITY DEBUG ===");
+                    System.out.println("Request: " + ((HttpServletRequest) request).getRequestURI());
+                    var auth = SecurityContextHolder.getContext().getAuthentication();
+                    if (auth != null) {
+                        System.out.println("User: " + auth.getName());
+                        System.out.println("Authorities: " + auth.getAuthorities());
+                    }
+                    chain.doFilter(request, response);
+                },
+                UsernamePasswordAuthenticationFilter.class
+        );
         return http.build();
     }
 
