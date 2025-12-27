@@ -6,15 +6,15 @@ import {
   trustedHTMLFromString
 } from "./chunk-NGX5KMVR.js";
 import "./chunk-NIKKJSKC.js";
+import {
+  BidiModule
+} from "./chunk-Y3DS6DSF.js";
 import "./chunk-SOGSEAAQ.js";
 import {
   HttpClient
 } from "./chunk-K67JVRBA.js";
 import "./chunk-QWBIRVBW.js";
 import "./chunk-NOQJMVOA.js";
-import {
-  BidiModule
-} from "./chunk-Y3DS6DSF.js";
 import {
   ChangeDetectionStrategy,
   Component,

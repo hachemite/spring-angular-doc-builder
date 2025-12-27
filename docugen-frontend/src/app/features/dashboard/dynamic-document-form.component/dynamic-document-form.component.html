@@ -54,66 +54,66 @@
             <div class="space-y-4">
               <ng-container *ngFor="let field of template.fields">
 
-                <!-- TEXT Field -->
-                <div *ngIf="field.type === 'TEXT'" class="w-full">
-                  <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
-                    <mat-label>{{ field.label }}</mat-label>
-                    <input matInput [formControlName]="field.variableName" type="text">
-                    <mat-error>{{ field.label }} is required</mat-error>
-                  </mat-form-field>
-                </div>
+<div *ngIf="field.type === 'TEXT'" class="w-full">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>{{ field.label }}</mat-label>
+    <input matInput [formControlName]="field.variableName" type="text" placeholder="Enter text...">
+    <mat-error>{{ field.label }} is required</mat-error>
+  </mat-form-field>
+</div>
 
-                <!-- NUMBER Field -->
-                <div *ngIf="field.type === 'NUMBER'" class="w-full">
-                  <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
-                    <mat-label>{{ field.label }}</mat-label>
-                    <input matInput [formControlName]="field.variableName" type="number">
-                    <mat-icon matPrefix>tag</mat-icon>
-                    <mat-error>{{ field.label }} is required</mat-error>
-                  </mat-form-field>
-                </div>
+<div *ngIf="field.type === 'NUMBER'" class="w-full">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>{{ field.label }}</mat-label>
+    <input matInput [formControlName]="field.variableName" type="number" placeholder="0">
+    <mat-icon matPrefix class="mr-2 text-gray-500">tag</mat-icon>
+    <mat-error>{{ field.label }} is required</mat-error>
+  </mat-form-field>
+</div>
 
-                <!-- DATE Field -->
-                <div *ngIf="field.type === 'DATE'" class="w-full">
-                  <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
-                    <mat-label>{{ field.label }}</mat-label>
-                    <input matInput [matDatepicker]="picker" [formControlName]="field.variableName">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error>{{ field.label }} is required</mat-error>
-                  </mat-form-field>
-                </div>
+<div *ngIf="field.type === 'DATE'" class="w-full">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>{{ field.label }}</mat-label>
+    <input matInput [matDatepicker]="picker" [formControlName]="field.variableName" placeholder="MM/DD/YYYY">
 
-                <!-- SELECT Field -->
-                <div *ngIf="field.type === 'SELECT'" class="w-full">
-                  <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
-                    <mat-label>{{ field.label }}</mat-label>
-                    <mat-select [formControlName]="field.variableName">
-                      <mat-option *ngFor="let opt of getOptions(field.options)" [value]="opt">
-                        {{ opt }}
-                      </mat-option>
-                    </mat-select>
-                    <mat-error>{{ field.label }} is required</mat-error>
-                  </mat-form-field>
-                </div>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
 
-                <!-- CHECKBOX Field -->
-                <div *ngIf="field.type === 'CHECKBOX'" class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                  <mat-checkbox [formControlName]="field.variableName" color="primary" class="text-base">
-                    {{ field.label }}
-                  </mat-checkbox>
-                </div>
+    <mat-error>{{ field.label }} is required</mat-error>
+  </mat-form-field>
+</div>
 
-                <!-- SIGNATURE Field -->
-                <div *ngIf="field.type === 'SIGNATURE'" class="w-full">
-                  <mat-form-field appearance="fill" class="w-full" style="width: 100%;">
-                    <mat-label>{{ field.label }}</mat-label>
-                    <input matInput [formControlName]="field.variableName" class="signature-input">
-                    <mat-icon matSuffix class="text-blue-500">draw</mat-icon>
-                    <mat-hint>Type your name to sign</mat-hint>
-                    <mat-error>{{ field.label }} is required</mat-error>
-                  </mat-form-field>
-                </div>
+<div *ngIf="field.type === 'SELECT'" class="w-full">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>{{ field.label }}</mat-label>
+    <mat-select [formControlName]="field.variableName" placeholder="Select an option">
+      <mat-option *ngFor="let opt of getOptions(field.options)" [value]="opt">
+        {{ opt }}
+      </mat-option>
+    </mat-select>
+    <mat-error>{{ field.label }} is required</mat-error>
+  </mat-form-field>
+</div>
+
+<div *ngIf="field.type === 'CHECKBOX'" class="w-full py-2">
+  <div class="flex items-center h-full p-4 bg-slate-100 rounded-lg border border-slate-200">
+     <mat-checkbox [formControlName]="field.variableName" color="primary">
+        <span class="font-medium text-gray-700 ml-2">{{ field.label }}</span>
+     </mat-checkbox>
+  </div>
+</div>
+
+<div *ngIf="field.type === 'SIGNATURE'" class="w-full">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>{{ field.label }}</mat-label>
+    <input matInput [formControlName]="field.variableName" class="signature-input" placeholder="Type name to sign">
+
+    <mat-icon matSuffix class="text-blue-600">draw</mat-icon>
+
+    <mat-hint>Type your full name as a digital signature</mat-hint>
+    <mat-error>{{ field.label }} is required</mat-error>
+  </mat-form-field>
+</div>
 
               </ng-container>
             </div>

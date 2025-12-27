@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -28,5 +28,31 @@ export class DocumentService {
   // Get all active templates (for dashboard list)
   getTemplates(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/templates`);
+  }
+
+
+  // FIXED: Generate Template from AI Description
+  generateTemplateFromAi(description: string): Observable<any> {
+    // Send as plain text with proper content type
+    const headers = new HttpHeaders({
+      'Content-Type': 'text/plain'
+    });
+
+
+    return this.http.post(
+      `${this.apiUrl}/admin/templates/ai/generate`,
+      description,  // Send raw string
+      { headers }
+    );
+  }
+
+
+  updateTemplate(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/admin/templates/${id}`, data);
+  }
+
+  // Delete template
+  deleteTemplate(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/admin/templates/${id}`);
   }
 }

@@ -1,183 +1,102 @@
-<div class="min-h-screen flex w-full">
+<div class="h-screen w-full flex items-center justify-center bg-gray-100 p-4 overflow-hidden">
 
-  <!-- Left Side - Brand Section -->
-  <div class="hidden lg:flex w-1/2 bg-gradient-to-br from-brand-900 via-brand-700 to-brand-600 items-center justify-center relative overflow-hidden">
-    <!-- Animated Background Blobs -->
-    <div class="absolute top-0 left-0 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 animate-pulse" style="animation-delay: 1s;"></div>
-    <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-white opacity-5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2 animate-pulse" style="animation-delay: 2s;"></div>
+  <div class="bg-white rounded-2xl shadow-2xl flex w-full max-w-4xl h-full max-h-[85vh] overflow-hidden">
 
-    <div class="relative z-10 max-w-lg px-10 text-center">
-      <div class="mb-8 flex justify-center">
-        <div class="w-20 h-20 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform duration-300">
-          <span class="material-icons text-white text-5xl">description</span>
-        </div>
-      </div>
-      <h1 class="text-5xl font-bold text-white mb-6 tracking-tight">Join DocuGen Pro</h1>
-      <p class="text-blue-100 text-xl leading-relaxed mb-8">
-        Start automating your documents today. No credit card required.
-      </p>
-      <div class="grid grid-cols-2 gap-4 text-white/90">
-        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-          <div class="text-3xl font-bold mb-1">10K+</div>
-          <div class="text-sm text-blue-100">Documents Generated</div>
-        </div>
-        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-          <div class="text-3xl font-bold mb-1">500+</div>
-          <div class="text-sm text-blue-100">Happy Customers</div>
+    <div class="hidden md:flex w-5/12 bg-gradient-to-bl from-blue-800 to-blue-900 items-center justify-center relative p-6">
+      <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+
+      <div class="relative z-10 text-center text-white">
+        <h2 class="text-2xl font-bold mb-3">Join Us</h2>
+        <p class="text-blue-100 text-xs mb-6 opacity-90">Start automating your workflow today.</p>
+
+        <div class="space-y-2">
+          <div class="flex items-center gap-3 bg-white/10 p-2 rounded backdrop-blur-sm">
+            <span class="material-icons text-green-400 text-xs">check</span>
+            <span class="text-xs font-medium">Unlimited Templates</span>
+          </div>
+          <div class="flex items-center gap-3 bg-white/10 p-2 rounded backdrop-blur-sm">
+            <span class="material-icons text-green-400 text-xs">check</span>
+            <span class="text-xs font-medium">Instant PDF Generation</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Right Side - Register Form -->
-  <div class="flex-1 flex items-center justify-center bg-gray-50 p-4 sm:p-6 lg:p-8">
-    <div class="w-full max-w-md">
+    <div class="w-full md:w-7/12 p-6 bg-white flex flex-col justify-center overflow-y-auto">
 
-      <!-- Card Container -->
-      <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 border border-gray-100">
-
-        <div class="text-center mb-5">
-          <h2 class="text-2xl font-bold text-gray-900 tracking-tight mb-1">Create Account</h2>
-          <p class="text-sm text-gray-500">Get started with your free account</p>
-        </div>
-
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-3.5">
-
-          <!-- Full Name Field -->
-          <div class="space-y-1.5">
-            <label for="fullName" class="block text-sm font-semibold text-gray-700">Full Name</label>
-            <div class="relative group">
-              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-all group-focus-within:text-brand-600">
-                <span class="material-icons text-gray-400 text-lg group-focus-within:text-brand-600 transition-colors">person</span>
-              </div>
-              <input
-                id="fullName"
-                type="text"
-                formControlName="fullName"
-                placeholder="John Doe"
-                class="block w-full pl-11 pr-4 py-2.5 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200 hover:border-gray-300"
-                [class.border-red-400]="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid"
-              >
-            </div>
-            <p *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid"
-               class="text-xs text-red-600 flex items-center gap-1">
-              <span class="material-icons text-xs">error</span>
-              Full name is required
-            </p>
-          </div>
-
-          <!-- Email Field -->
-          <div class="space-y-1.5">
-            <label for="email" class="block text-sm font-semibold text-gray-700">Email address</label>
-            <div class="relative group">
-              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-all group-focus-within:text-brand-600">
-                <span class="material-icons text-gray-400 text-lg group-focus-within:text-brand-600 transition-colors">email</span>
-              </div>
-              <input
-                id="email"
-                type="email"
-                formControlName="email"
-                placeholder="you@example.com"
-                class="block w-full pl-11 pr-4 py-2.5 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200 hover:border-gray-300"
-                [class.border-red-400]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
-              >
-            </div>
-            <p *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
-               class="text-xs text-red-600 flex items-center gap-1">
-              <span class="material-icons text-xs">error</span>
-              Valid email is required
-            </p>
-          </div>
-
-          <!-- Password Field -->
-          <div class="space-y-1.5">
-            <label for="password" class="block text-sm font-semibold text-gray-700">Password</label>
-            <div class="relative group">
-              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-all group-focus-within:text-brand-600">
-                <span class="material-icons text-gray-400 text-lg group-focus-within:text-brand-600 transition-colors">lock</span>
-              </div>
-              <input
-                id="password"
-                type="password"
-                formControlName="password"
-                placeholder="Min 6 characters"
-                class="block w-full pl-11 pr-4 py-2.5 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200 hover:border-gray-300"
-                [class.border-red-400]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
-              >
-            </div>
-            <p *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
-               class="text-xs text-red-600 flex items-center gap-1">
-              <span class="material-icons text-xs">error</span>
-              Password must be at least 6 characters
-            </p>
-          </div>
-
-          <!-- Error Message -->
-          <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 p-3 rounded-lg animate-shake">
-            <div class="flex items-center gap-2">
-              <div class="flex-shrink-0">
-                <span class="material-icons text-red-500 text-lg">error</span>
-              </div>
-              <p class="text-sm text-red-700 font-medium">{{ errorMessage }}</p>
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <button
-            type="submit"
-            [disabled]="registerForm.invalid"
-            class="group relative w-full flex items-center justify-center gap-2 py-2.5 px-4 border border-transparent text-base font-semibold rounded-xl text-white bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-brand-600 disabled:hover:to-brand-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-          >
-            <span>Create Account</span>
-            <span class="material-icons text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
-          </button>
-
-          <!-- Terms -->
-          <p class="text-xs text-gray-500 text-center -mt-1">
-            By signing up, you agree to our
-            <a href="#" class="text-brand-600 hover:text-brand-700 font-medium">Terms</a>
-          </p>
-
-          <!-- Divider -->
-          <div class="relative my-3">
-            <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-200"></div>
-            </div>
-            <div class="relative flex justify-center text-xs">
-              <span class="px-3 bg-white text-gray-500">Already have an account?</span>
-            </div>
-          </div>
-
-          <!-- Login Link -->
-          <div class="text-center">
-            <a routerLink="/login"
-               class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:text-brand-700 hover:gap-3 transition-all duration-200">
-              Sign in instead
-              <span class="material-icons text-base">arrow_forward</span>
-            </a>
-          </div>
-
-        </form>
+      <div class="text-center mb-6 shrink-0">
+        <h3 class="text-xl font-bold text-gray-900">Create Account</h3>
+        <p class="text-xs text-gray-500 mt-1">Get started for free</p>
       </div>
 
-      <!-- Footer Info -->
-      <p class="text-center text-xs text-gray-500 mt-3">
-        🔒 Your data is protected with enterprise-grade encryption
-      </p>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4 w-full max-w-xs mx-auto">
 
+        <div>
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="material-icons text-gray-400 text-sm group-focus-within:text-blue-600">person</span>
+            </div>
+            <input
+              formControlName="fullName"
+              type="text"
+              placeholder="Full Name"
+              class="block w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              [class.border-red-500]="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid"
+            >
+          </div>
+        </div>
+
+        <div>
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="material-icons text-gray-400 text-sm group-focus-within:text-blue-600">email</span>
+            </div>
+            <input
+              formControlName="email"
+              type="email"
+              placeholder="Email"
+              class="block w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              [class.border-red-500]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
+            >
+          </div>
+          <p *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-[10px] text-red-500 ml-1 mt-0.5">
+            Valid email required
+          </p>
+        </div>
+
+        <div>
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="material-icons text-gray-400 text-sm group-focus-within:text-blue-600">lock</span>
+            </div>
+            <input
+              formControlName="password"
+              type="password"
+              placeholder="Password (Min 6 chars)"
+              class="block w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
+            >
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="bg-red-50 border border-red-100 text-red-600 text-[10px] p-2 rounded flex items-center gap-2">
+          <span class="material-icons text-xs">error</span>
+          {{ errorMessage }}
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid"
+          class="w-full bg-blue-600 text-white py-2 rounded-lg font-medium text-sm hover:bg-blue-700 shadow-md transition-all mt-2"
+        >
+          Create Account
+        </button>
+
+        <div class="text-center mt-3">
+          <span class="text-xs text-gray-500">Already have an account? </span>
+          <a routerLink="/login" class="text-xs font-semibold text-blue-600 hover:underline cursor-pointer">Sign in</a>
+        </div>
+
+      </form>
     </div>
   </div>
 </div>
-
-<style>
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-.animate-shake {
-  animation: shake 0.3s ease-in-out;
-}
-</style>

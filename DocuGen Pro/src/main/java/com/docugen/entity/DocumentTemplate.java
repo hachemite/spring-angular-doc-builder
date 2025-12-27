@@ -24,7 +24,6 @@ public class DocumentTemplate {
 
     private String description;
 
-    // Use TEXT type for large HTML strings in Postgres
     @Column(name = "content_html", columnDefinition = "TEXT", nullable = false)
     private String contentHtml;
 
@@ -32,11 +31,11 @@ public class DocumentTemplate {
     @Builder.Default
     private boolean active = true;
 
+    // CRITICAL: orphanRemoval = true is required for proper updates/deletes
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<FormField> fields = new ArrayList<>();
 
-    // Helper method to ensure bidirectional relationship is maintained
     public void addField(FormField field) {
         fields.add(field);
         field.setTemplate(this);
