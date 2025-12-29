@@ -1,34 +1,29 @@
+/* Signature Styling */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
 .signature-input {
-  font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
-  font-size: 1.5rem;
-  color: #1a237e;
-  font-weight: 500;
+  font-family: 'Dancing Script', cursive; /* Looks like a signature */
+  color: #1e3a8a; /* Dark Blue ink color */
 }
 
-/* Success Snackbar */
-::ng-deep .success-snackbar {
-  background-color: #4caf50 !important;
-  color: white !important;
+.signature-input::placeholder {
+  font-family: 'Inter', sans-serif; /* Keep placeholder readable */
+  font-size: 1rem;
+  color: #94a3b8;
 }
 
-/* Form Field Spacing */
-mat-form-field {
-  display: block;
-  margin-bottom: 0;
+/* Animations */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
-/* Card Header Override */
-mat-card-header {
-  margin-bottom: 0 !important;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Checkbox Container */
-.mat-mdc-checkbox {
-  display: flex;
-  align-items: center;
-}
-
-/* Loading Spinner Center */
-.flex.justify-center.items-center {
-  min-height: 400px;
+/* Mat Form Field Tweaks for "Outline" appearance */
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  /* Remove extra bottom padding since we use subscriptSizing="dynamic" */
+  margin-top: 0.25em;
 }
