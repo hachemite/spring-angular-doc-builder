@@ -1,46 +1,46 @@
-<div class="h-screen w-full flex items-center justify-center bg-gray-100 p-4 overflow-hidden">
+<div class="min-h-screen w-full flex items-center justify-center bg-gray-100 p-4">
 
-  <div class="bg-white rounded-2xl shadow-2xl flex w-full max-w-4xl h-full max-h-[85vh] overflow-hidden">
+  <div class="bg-white rounded-2xl shadow-2xl flex w-full max-w-4xl overflow-hidden min-h-[600px]">
 
-    <div class="hidden md:flex w-5/12 bg-gradient-to-bl from-blue-800 to-blue-900 items-center justify-center relative p-6">
+    <div class="hidden md:flex w-5/12 bg-gradient-to-bl from-blue-800 to-blue-900 items-center justify-center relative p-8">
       <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
 
       <div class="relative z-10 text-center text-white">
-        <h2 class="text-2xl font-bold mb-3">Join Us</h2>
-        <p class="text-blue-100 text-xs mb-6 opacity-90">Start automating your workflow today.</p>
+        <h2 class="text-3xl font-bold mb-4">Join Us</h2>
+        <p class="text-blue-100 text-sm mb-8 opacity-90">Start automating your workflow today.</p>
 
-        <div class="space-y-2">
-          <div class="flex items-center gap-3 bg-white/10 p-2 rounded backdrop-blur-sm">
-            <span class="material-icons text-green-400 text-xs">check</span>
-            <span class="text-xs font-medium">Unlimited Templates</span>
+        <div class="space-y-4 text-left inline-block">
+          <div class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+            <span class="material-icons text-green-400 text-sm">check_circle</span>
+            <span class="text-sm font-medium">Unlimited Templates</span>
           </div>
-          <div class="flex items-center gap-3 bg-white/10 p-2 rounded backdrop-blur-sm">
-            <span class="material-icons text-green-400 text-xs">check</span>
-            <span class="text-xs font-medium">Instant PDF Generation</span>
+          <div class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+            <span class="material-icons text-green-400 text-sm">check_circle</span>
+            <span class="text-sm font-medium">Instant PDF Generation</span>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="w-full md:w-7/12 p-6 bg-white flex flex-col justify-center overflow-y-auto">
+    <div class="w-full md:w-7/12 p-8 md:p-12 bg-white flex flex-col justify-center">
 
-      <div class="text-center mb-6 shrink-0">
-        <h3 class="text-xl font-bold text-gray-900">Create Account</h3>
-        <p class="text-xs text-gray-500 mt-1">Get started for free</p>
+      <div class="text-center mb-8">
+        <h3 class="text-2xl font-bold text-gray-900">Create Account</h3>
+        <p class="text-sm text-gray-500 mt-2">Get started for free</p>
       </div>
 
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4 w-full max-w-xs mx-auto">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5 w-full max-w-sm mx-auto">
 
         <div>
           <div class="relative group">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span class="material-icons text-gray-400 text-sm group-focus-within:text-blue-600">person</span>
+              <span class="material-icons text-gray-400 text-lg group-focus-within:text-blue-600 transition-colors">person</span>
             </div>
             <input
               formControlName="fullName"
               type="text"
               placeholder="Full Name"
-              class="block w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              class="block w-full pl-10 pr-4 py-3 text-sm border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               [class.border-red-500]="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid"
             >
           </div>
@@ -49,17 +49,17 @@
         <div>
           <div class="relative group">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span class="material-icons text-gray-400 text-sm group-focus-within:text-blue-600">email</span>
+              <span class="material-icons text-gray-400 text-lg group-focus-within:text-blue-600 transition-colors">email</span>
             </div>
             <input
               formControlName="email"
               type="email"
               placeholder="Email"
-              class="block w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              class="block w-full pl-10 pr-4 py-3 text-sm border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               [class.border-red-500]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
             >
           </div>
-          <p *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-[10px] text-red-500 ml-1 mt-0.5">
+          <p *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-xs text-red-500 ml-1 mt-1">
             Valid email required
           </p>
         </div>
@@ -67,33 +67,33 @@
         <div>
           <div class="relative group">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span class="material-icons text-gray-400 text-sm group-focus-within:text-blue-600">lock</span>
+              <span class="material-icons text-gray-400 text-lg group-focus-within:text-blue-600 transition-colors">lock</span>
             </div>
             <input
               formControlName="password"
               type="password"
               placeholder="Password (Min 6 chars)"
-              class="block w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              class="block w-full pl-10 pr-4 py-3 text-sm border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
             >
           </div>
         </div>
 
-        <div *ngIf="errorMessage" class="bg-red-50 border border-red-100 text-red-600 text-[10px] p-2 rounded flex items-center gap-2">
-          <span class="material-icons text-xs">error</span>
+        <div *ngIf="errorMessage" class="bg-red-50 border border-red-200 text-red-700 text-xs p-3 rounded-lg flex items-center gap-2">
+          <span class="material-icons text-sm">error</span>
           {{ errorMessage }}
         </div>
 
         <button
           type="submit"
           [disabled]="registerForm.invalid"
-          class="w-full bg-blue-600 text-white py-2 rounded-lg font-medium text-sm hover:bg-blue-700 shadow-md transition-all mt-2"
+          class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold text-sm hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Create Account
         </button>
 
-        <div class="text-center mt-3">
-          <span class="text-xs text-gray-500">Already have an account? </span>
-          <a routerLink="/login" class="text-xs font-semibold text-blue-600 hover:underline cursor-pointer">Sign in</a>
+        <div class="text-center mt-6">
+          <span class="text-sm text-gray-500">Already have an account? </span>
+          <a routerLink="/login" class="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer transition-colors">Sign in</a>
         </div>
 
       </form>

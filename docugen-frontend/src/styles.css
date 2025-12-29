@@ -3,6 +3,7 @@
    ========================================================================== */
 /* Angular Material Theme - Must be first */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+/* Clean URL - No brackets or markdown */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Tailwind Directives */
@@ -17,7 +18,8 @@ html, body {
     height: 100%;
     margin: 0;
     font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif;
-    background-color: #f8fafc; /* Tailwind slate-50 */
+    background-color: #ffffff;
+    color: #0f172a; /* slate-900 */
 }
 
 /* ==========================================================================
@@ -41,7 +43,7 @@ html, body {
 .mat-mdc-form-field-infix {
     width: auto !important;
     flex: 1 1 auto !important;
-    min-width: 0 !important; /* CRITICAL: Prevents flex items from overflowing */
+    min-width: 0 !important;
 }
 
 /* FIX: Ensure Inputs take full width of the infix */
@@ -86,7 +88,7 @@ html, body {
 .mat-mdc-form-field-focus-overlay { opacity: 0 !important; }
 .mdc-line-ripple { display: none !important; }
 
-/* INPUTS: Default State (Slate-100 bg, Rounded) */
+/* INPUTS: Default State */
 .mat-mdc-form-field.mat-form-field-appearance-fill .mat-mdc-text-field-wrapper {
     background-color: #f1f5f9 !important; /* slate-100 */
     border-radius: 8px !important;
@@ -94,14 +96,43 @@ html, body {
     transition: all 0.2s ease-in-out;
 }
 
-/* INPUTS: Hover State (Slate-200 bg) */
+/* INPUTS: Hover State */
 .mat-mdc-form-field.mat-form-field-appearance-fill .mat-mdc-text-field-wrapper:hover {
     background-color: #e2e8f0 !important; /* slate-200 */
 }
 
-/* INPUTS: Focus State (White bg + Blue Ring) */
+/* INPUTS: Focus State */
 .mat-mdc-form-field.mat-form-field-appearance-fill.mat-focused .mat-mdc-text-field-wrapper {
     background-color: #ffffff !important;
     outline: 2px solid #3b82f6 !important; /* blue-500 */
-    outline-offset: -1px; /* Pulls the outline inside slightly */
+    outline-offset: -1px;
 }
+
+/* ==========================================================================
+   5. LANDING PAGE UTILITIES
+   ========================================================================== */
+
+/* Technical Dot Pattern Background */
+.bg-grid-pattern {
+    background-size: 40px 40px;
+    background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+    mask-image: linear-gradient(to bottom, transparent, 10%, white, 90%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, 5%, black, 95%, transparent);
+}
+
+/* Gradient Text Utility */
+.text-gradient {
+    background: linear-gradient(to right, #2563eb, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Glass Card Effect */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+

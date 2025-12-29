@@ -47,7 +47,7 @@ export class DocumentService {
   }
 
 
-  updateTemplate(id: number, data: any): Observable<any> {
+updateTemplate(id: number, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/admin/templates/${id}`, data);
   }
 
