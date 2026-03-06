@@ -35,28 +35,22 @@ https://github.com/user-attachments/assets/035990b1-9b26-4237-9663-90444a6fe0ce
 
 ## 🚀 Fonctionnalités
 
-* 
-**Gestion des Templates Dynamiques :** Création de modèles HTML avec variables Thymeleaf (`{{client_name}}`, `{{amount}}`, etc.).
+* **Gestion des Templates Dynamiques :** Création de modèles HTML avec variables Thymeleaf (`{{client_name}}`, `{{amount}}`, etc.).
 
 
-* 
-**Génération par IA (Groq/Llama 3) :** Création automatique de la structure HTML et des champs du formulaire à partir d'une simple description textuelle.
+* **Génération par IA (Groq/Llama 3) :** Création automatique de la structure HTML et des champs du formulaire à partir d'une simple description textuelle.
 
 
-* 
-**Génération PDF Robuste :** Conversion HTML vers PDF utilisant Flying Saucer et OpenPDF, avec nettoyage du code via Jsoup.
+* **Génération PDF Robuste :** Conversion HTML vers PDF utilisant Flying Saucer et OpenPDF, avec nettoyage du code via Jsoup.
 
 
-* 
-**Sécurité Avancée :** Authentification JWT stateless avec gestion des rôles (ADMIN/USER).
+* **Sécurité Avancée :** Authentification JWT stateless avec gestion des rôles (ADMIN/USER).
 
 
-* 
-**Emailing Automatisé :** Envoi immédiat du document généré en pièce jointe au destinataire.
+* **Emailing Automatisé :** Envoi immédiat du document généré en pièce jointe au destinataire.
 
 
-* 
-**Signature Numérique :** Support des champs de signature dans les formulaires dynamiques.
+* **Signature Numérique :** Support des champs de signature dans les formulaires dynamiques.
 
 
 
