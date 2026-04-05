@@ -15,7 +15,7 @@
     </div>
 
     <div class="flex gap-3">
-      <button *ngIf="!isEditMode" mat-flat-button class="bg-purple-600 text-white hover:bg-purple-700"
+<button *ngIf="!isEditMode" mat-flat-button class="bg-purple-600 text-white hover:bg-purple-700"
               (click)="openAiPrompt()"
               [disabled]="isAiLoading">
         <mat-icon *ngIf="!isAiLoading">auto_awesome</mat-icon>
@@ -53,6 +53,13 @@
                 <mat-label>Description</mat-label>
                 <input matInput formControlName="description" placeholder="Brief summary">
               </mat-form-field>
+            </div>
+<div class="flex items-center gap-6 mt-2">
+              <mat-checkbox formControlName="active" color="primary">Active (Visible to users)</mat-checkbox>
+              
+              <mat-checkbox formControlName="premium" color="accent">
+                Pro Template <mat-icon class="text-sm align-middle">workspace_premium</mat-icon>
+              </mat-checkbox>
             </div>
 
             <mat-checkbox formControlName="active" color="primary">Active (Visible to users)</mat-checkbox>

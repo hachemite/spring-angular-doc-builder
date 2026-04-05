@@ -1,29 +1,42 @@
-/* Signature Styling */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
 
+/* Signature */
 .signature-input {
-  font-family: 'Dancing Script', cursive; /* Looks like a signature */
-  color: #1e3a8a; /* Dark Blue ink color */
+  font-family: 'Dancing Script', cursive;
+  color: #1e3a8a;
 }
-
 .signature-input::placeholder {
-  font-family: 'Inter', sans-serif; /* Keep placeholder readable */
+  font-family: 'Inter', sans-serif;
   font-size: 1rem;
   color: #94a3b8;
 }
 
-/* Animations */
+/* PRO badge — replaces the ugly chunky one */
+.pro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 0.5px solid rgba(245, 158, 11, 0.4);
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fbbf24;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+/* Fade-in animation */
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Mat Form Field Tweaks for "Outline" appearance */
+/* Material form field fix */
 :host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-  /* Remove extra bottom padding since we use subscriptSizing="dynamic" */
   margin-top: 0.25em;
 }

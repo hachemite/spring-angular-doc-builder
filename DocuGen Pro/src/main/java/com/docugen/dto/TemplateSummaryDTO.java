@@ -14,4 +14,5 @@ public class TemplateSummaryDTO {
     private Long id;
     private String name;
     private String description;
+    private boolean premium;
 }

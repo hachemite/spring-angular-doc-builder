@@ -27,7 +27,7 @@ public class PublicTemplateController {
     public ResponseEntity<List<TemplateSummaryDTO>> getActiveTemplates() {
         List<TemplateSummaryDTO> summaries = templateRepository.findByActiveTrue()
                 .stream()
-                .map(t -> new TemplateSummaryDTO(t.getId(), t.getName(), t.getDescription()))
+                .map(t -> new TemplateSummaryDTO(t.getId(), t.getName(), t.getDescription(), t.isPremium())) // ✅ Added t.isPremium()
                 .collect(Collectors.toList());
 
         System.out.println("📋 Returning " + summaries.size() + " active templates");
@@ -65,6 +65,7 @@ public class PublicTemplateController {
                 .description(template.getDescription())
                 .contentHtml(template.getContentHtml())
                 .active(template.isActive())
+                .premium(template.isPremium())
                 .fields(fieldDtos)
                 .build();
 

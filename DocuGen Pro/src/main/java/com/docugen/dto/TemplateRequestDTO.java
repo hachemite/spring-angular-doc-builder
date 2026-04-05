@@ -25,5 +25,7 @@ public class TemplateRequestDTO {
 
     private boolean active;
 
+    private boolean premium;
+
     private List<FormFieldDTO> fields;
 }

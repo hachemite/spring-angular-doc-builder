@@ -1,12 +1,16 @@
 package com.docugen.controller;
 
 import com.docugen.dto.DocumentDataDTO;
+import com.docugen.entity.DocumentTemplate;
 import com.docugen.entity.User;
+import com.docugen.model.SubscriptionTier;
+import com.docugen.repository.DocumentTemplateRepository;
 import com.docugen.repository.UserRepository;
 import com.docugen.service.DocumentService;
 import com.docugen.service.DynamicPdfService;
 import com.docugen.service.EmailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +26,7 @@ public class DocumentController {
 
     private final DocumentService documentService;
     private final UserRepository userRepository;
+    private final DocumentTemplateRepository templateRepository; // ✅ ADDED: Required for template checks
     private final DynamicPdfService dynamicPdfService;
     private final EmailService emailService;
 
@@ -62,7 +67,7 @@ public class DocumentController {
                 return ResponseEntity.badRequest().body("recipientEmail is required");
             }
 
-            // Extract and convert templateId
+            // 1. EXTRACT AND CONVERT FIRST
             Object templateIdObj = payload.get("templateId");
             Long templateId;
 
@@ -79,6 +84,19 @@ public class DocumentController {
 
             System.out.println("Processing template ID: " + templateId);
             System.out.println("Recipient email: " + recipientEmail);
+
+            // 2. NOW FETCH FROM DATABASE AND CHECK TIER LOGIC
+            DocumentTemplate template = templateRepository.findById(templateId)
+                    .orElseThrow(() -> new RuntimeException("Template not found"));
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            User user = userRepository.findByEmail(authentication.getName())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            if (template.isPremium() && user.getTier() == SubscriptionTier.FREE) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("This is a PRO template. Please upgrade your subscription.");
+            }
 
             // Remove templateId and recipientEmail from payload so they don't get passed to Thymeleaf
             Map<String, Object> templateData = new java.util.HashMap<>(payload);

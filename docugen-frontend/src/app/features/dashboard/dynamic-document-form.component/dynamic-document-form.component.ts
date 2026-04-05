@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DocumentService } from '../../../core/service/document';
+import { AuthService } from '../../../core/service/auth';
 
 // Angular Material Imports
 import { MatCardModule } from '@angular/material/card';
@@ -46,6 +47,7 @@ export class DynamicDocumentFormComponent implements OnInit {
   private docService = inject(DocumentService);
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
+  private authService = inject(AuthService);
 
   template: any = null;
   form!: FormGroup;
@@ -53,6 +55,10 @@ export class DynamicDocumentFormComponent implements OnInit {
   isSubmitting = false;
 
   recipientControl = new FormControl('', [Validators.required, Validators.email]);
+
+  get isPro(): boolean {
+    return this.authService.isPro();
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

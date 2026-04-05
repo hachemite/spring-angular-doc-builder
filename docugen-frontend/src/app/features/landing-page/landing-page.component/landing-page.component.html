@@ -1,162 +1,562 @@
-<div class="main-container bg-white min-h-screen font-sans selection:bg-[#4257cd] selection:text-white">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DocuGen Pro — Contract Creation in 30 Seconds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <section class="pt-24 pb-20 px-4 relative overflow-hidden">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 opacity-5 pointer-events-none">
-      <div class="w-[800px] h-[800px] bg-[#4257cd] rounded-full blur-3xl mx-auto mt-[-400px]"></div>
+    :root {
+      --blue: #3a4fd4;
+      --blue-dark: #2a3bb0;
+      --blue-light: #eef0fb;
+      --ink: #0f1117;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --white: #ffffff;
+      --off: #f9fafb;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.05rem; font-weight: 700; color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo .dot { color: var(--blue); }
+    .nav-icon {
+      width: 30px; height: 30px;
+      background: var(--blue); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-icon svg { width: 16px; height: 16px; color: white; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .btn-ghost {
+      padding: 8px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 500;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); }
+    .btn-primary {
+      padding: 8px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+      background: var(--blue); color: white; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 140px 40px 100px;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid var(--border); background: var(--off);
+      font-size: 0.8rem; font-weight: 500; color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; display: inline-block; }
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.8rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    h1 em { font-style: italic; color: var(--blue); }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); line-height: 1.7;
+      margin-bottom: 36px; font-weight: 400;
+    }
+    .hero-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .btn-lg {
+      padding: 13px 28px; border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-lg.primary {
+      background: var(--blue); color: white;
+      box-shadow: 0 4px 20px rgba(58,79,212,0.3);
+    }
+    .btn-lg.primary:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(58,79,212,0.35); }
+    .btn-lg.outline {
+      border: 1.5px solid var(--border); color: var(--ink); background: white;
+    }
+    .btn-lg.outline:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* hero card mock */
+    .hero-visual {
+      position: relative;
+    }
+    .doc-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .doc-card-header {
+      background: var(--off); border-bottom: 1px solid var(--border);
+      padding: 14px 18px; display: flex; align-items: center; gap: 10px;
+    }
+    .doc-card-header .dots { display: flex; gap: 6px; }
+    .doc-card-header .dots span {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .doc-card-header .dots span:nth-child(1) { background: #f87171; }
+    .doc-card-header .dots span:nth-child(2) { background: #fbbf24; }
+    .doc-card-header .dots span:nth-child(3) { background: #4ade80; }
+    .doc-card-header .label {
+      font-size: 0.78rem; color: var(--muted); font-weight: 500; margin-left: 4px;
+    }
+    .doc-card-body { padding: 24px; }
+    .doc-line {
+      height: 10px; border-radius: 4px; background: var(--border);
+      margin-bottom: 10px;
+    }
+    .doc-line.short { width: 55%; }
+    .doc-line.medium { width: 75%; }
+    .doc-line.long { width: 90%; }
+    .doc-line.title { height: 14px; width: 50%; background: #c7cef5; margin-bottom: 18px; }
+    .doc-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+    .doc-field {
+      display: flex; gap: 10px; margin-bottom: 10px;
+    }
+    .field-label { height: 10px; width: 80px; border-radius: 4px; background: #c7cef5; flex-shrink: 0; }
+    .field-val { height: 10px; flex: 1; border-radius: 4px; background: var(--border); }
+    .doc-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--blue-light); color: var(--blue);
+      border-radius: 6px; padding: 5px 10px; font-size: 0.75rem; font-weight: 600;
+      margin-top: 8px;
+    }
+    .doc-tag svg { width: 12px; height: 12px; }
+    .card-float {
+      position: absolute; bottom: -20px; right: -24px;
+      background: white; border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.8rem; font-weight: 600; color: var(--ink);
+    }
+    .card-float .icon { font-size: 1.2rem; }
+
+    /* ── STRIP ── */
+    .strip {
+      background: var(--off); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      display: flex; gap: 48px; align-items: center; justify-content: center;
+      flex-wrap: wrap;
+    }
+    .strip-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; font-weight: 500; color: var(--muted);
+    }
+    .strip-item svg { width: 16px; height: 16px; color: var(--blue); }
+
+    /* ── PROBLEM ── */
+    .problem {
+      padding: 100px 40px;
+      max-width: 900px; margin: 0 auto; text-align: center;
+    }
+    .section-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 20px;
+    }
+    h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 16px;
+    }
+    .pain-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px;
+    }
+    .pain-card {
+      background: white; border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; text-align: left;
+    }
+    .pain-icon { font-size: 1.5rem; margin-bottom: 12px; }
+    .pain-title { font-weight: 600; font-size: 0.95rem; color: var(--ink); margin-bottom: 6px; }
+    .pain-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .pain-strike { text-decoration: line-through; color: #f87171; font-weight: 600; }
+
+    /* ── STEPS ── */
+    .steps {
+      padding: 100px 40px;
+      background: var(--off); border-top: 1px solid var(--border);
+    }
+    .steps-inner { max-width: 1000px; margin: 0 auto; }
+    .steps-header { text-align: center; margin-bottom: 64px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; position: relative; }
+    .steps-grid::before {
+      content: '';
+      position: absolute; top: 28px; left: 16%; right: 16%; height: 1px;
+      background: repeating-linear-gradient(to right, var(--blue) 0, var(--blue) 6px, transparent 6px, transparent 14px);
+      opacity: 0.3;
+    }
+    .step {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+    }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--blue); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Instrument Serif', serif; font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .step-title { font-weight: 700; font-size: 1.1rem; color: var(--ink); }
+    .step-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .step-quote {
+      font-style: italic; color: var(--blue); font-size: 0.85rem;
+      border-left: 2px solid var(--blue-light); padding-left: 12px; margin-top: 4px;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 100px 40px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .features-header { text-align: center; margin-bottom: 64px; }
+    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .feature-card {
+      background: white; border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 32px;
+      display: flex; gap: 20px; align-items: flex-start;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: var(--blue); box-shadow: 0 8px 30px rgba(58,79,212,0.08);
+      transform: translateY(-2px);
+    }
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 10px; background: var(--blue-light);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .feature-icon svg { width: 22px; height: 22px; color: var(--blue); }
+    .feature-title { font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: 6px; }
+    .feature-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+    .feature-stack {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+    }
+    .tag {
+      font-size: 0.72rem; font-weight: 600; padding: 3px 8px;
+      border-radius: 4px; background: var(--off); border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      margin: 40px; border-radius: 20px;
+      background: var(--blue);
+      padding: 80px 40px; text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      color: white; letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .cta-section p { color: rgba(255,255,255,0.75); font-size: 1.05rem; margin-bottom: 36px; }
+    .btn-white {
+      display: inline-block; padding: 14px 32px;
+      background: white; color: var(--blue);
+      font-weight: 700; font-size: 0.95rem;
+      border-radius: 10px; text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+    .cta-note { margin-top: 16px; font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 40px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-logo { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+    .footer-logo .dot { color: var(--blue); }
+    footer p { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left { animation: fadeUp 0.6s ease both; }
+    .hero-visual { animation: fadeUp 0.6s ease 0.15s both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 120px 24px 80px; }
+      .hero-visual { display: none; }
+      .pain-grid, .steps-grid, .features-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .cta-section { margin: 20px; padding: 60px 24px; }
+      footer { flex-direction: column; text-align: center; }
+      .strip { gap: 24px; padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      </div>
+      DocuGen<span class="dot">Pro</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how" class="btn-ghost">How it works</a>
+      <a href="#features" class="btn-ghost">Features</a>
+      <a href="/login" class="btn-ghost">Sign in</a>
+      <a href="/register" class="btn-primary">Get Started</a>
     </div>
+  </nav>
 
-    <div class="max-w-7xl mx-auto text-center relative z-10">
-
-      <div class="inline-flex items-center gap-3 mb-10 bg-blue-50 px-5 py-2 rounded-full border border-blue-100">
-        <div class="w-6 h-6 bg-[#4257cd] rounded flex items-center justify-center">
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
+  <!-- HERO -->
+  <section style="max-width:1200px; margin:0 auto; padding: 0 40px;">
+    <div class="hero">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span></span>
+          Now live — AI-powered contracts
         </div>
-        <span class="font-bold text-lg text-gray-900 tracking-tight">DocuGen<span class="text-[#4257cd]">Pro</span></span>
-      </div>
-
-      <h1 class="text-7xl md:text-9xl font-black mb-8 leading-[0.9] text-slate-900 tracking-tighter">
-        Contract creation.<br/>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#4257cd] to-blue-500">
-          In 30 seconds.
-        </span>
-      </h1>
-
-      <p class="text-xl md:text-2xl text-gray-500 mb-12 max-w-3xl mx-auto font-medium leading-relaxed">
-        Describe your document. Fill a form. Get a perfect PDF. <br class="hidden md:block"/>
-        <span class="text-gray-900">No templates. No developers. No delays.</span>
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-5 justify-center items-center mb-16">
-        <a routerLink="/register" class="px-10 py-4 bg-[#4257cd] text-white rounded-xl text-lg font-bold hover:bg-blue-800 hover:scale-105 transition-all shadow-xl shadow-blue-200">
-          Start for Free
-        </a>
-        <a routerLink="/login" class="px-10 py-4 bg-white text-gray-700 rounded-xl text-lg font-bold border-2 border-gray-100 hover:border-[#4257cd] hover:text-[#4257cd] transition-all">
-          Sign In
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20 px-4 bg-slate-50 border-y border-gray-200">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
-          The formatting nightmare ends here.
-        </h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          Word templates break. Developers cost thousands. Manual editing wastes hours.
-          <span class="text-[#4257cd] font-bold block mt-2">DocuGen Pro eliminates the bottleneck. Describe once, generate forever.</span>
+        <h1>
+          Create contracts<br/><em>in 30 seconds.</em><br/>No templates.
+        </h1>
+        <p class="hero-sub">
+          Describe what you need in plain language. We generate the form, you fill it in, we deliver a perfect PDF — instantly.
         </p>
+        <div class="hero-actions">
+          <a href="/register" class="btn-lg primary">Start for Free →</a>
+          <a href="/login" class="btn-lg outline">Sign In</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="doc-card">
+          <div class="doc-card-header">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <span class="label">freelance-contract.pdf</span>
+          </div>
+          <div class="doc-card-body">
+            <div class="doc-line title"></div>
+            <div class="doc-field"><div class="field-label"></div><div class="field-val"></div></div>
+            <div class="doc-field"><div class="field-label"></div><div class="field-val" style="width:60%"></div></div>
+            <hr class="doc-divider"/>
+            <div class="doc-line long"></div>
+            <div class="doc-line medium"></div>
+            <div class="doc-line short"></div>
+            <hr class="doc-divider"/>
+            <div class="doc-line long"></div>
+            <div class="doc-line medium"></div>
+            <div class="doc-tag">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Ready to export
+            </div>
+          </div>
+        </div>
+        <div class="card-float">
+          <span class="icon">⚡</span>
+          Generated in 4.2s
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="py-24 px-4 bg-white">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-4xl md:text-6xl font-black text-center mb-20 text-slate-900 tracking-tighter">
-        How it works
-      </h2>
+  <!-- STRIP -->
+  <div class="strip">
+    <div class="strip-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      No credit card required
+    </div>
+    <div class="strip-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      Works for any document type
+    </div>
+    <div class="strip-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      PDF delivered to your inbox
+    </div>
+    <div class="strip-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      Powered by Groq + Llama 3
+    </div>
+  </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="group p-8 rounded-3xl border-2 border-gray-100 hover:border-[#4257cd] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 bg-white">
-          <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-[#4257cd] text-2xl font-black group-hover:bg-[#4257cd] group-hover:text-white transition-colors">1</div>
-          <h3 class="text-2xl font-bold mb-4 text-slate-900">Describe</h3>
-          <p class="text-gray-600 text-lg leading-relaxed">
-            "I need a freelance contract with payment terms and IP rights." Natural language. No templates to find.
-          </p>
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="section-label">The problem</div>
+    <h2>Document creation is broken.</h2>
+    <p style="color:var(--muted); font-size:1.05rem; max-width:600px; margin:0 auto; line-height:1.7;">
+      Word templates corrupt. Lawyers cost thousands. Manual formatting eats hours. There's never been a clean solution — until now.
+    </p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">📄</div>
+        <div class="pain-title"><span class="pain-strike">Word templates</span></div>
+        <div class="pain-desc">Break on every machine, require manual editing, and never look consistent.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">💸</div>
+        <div class="pain-title"><span class="pain-strike">Hiring developers</span></div>
+        <div class="pain-desc">Thousands of dollars for a PDF generator. Weeks of back-and-forth. Overkill.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">⏳</div>
+        <div class="pain-title"><span class="pain-strike">Manual editing</span></div>
+        <div class="pain-desc">Copy-pasting names and dates. Missing clauses. Version control nightmares.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="steps" id="how">
+    <div class="steps-inner">
+      <div class="steps-header">
+        <div class="section-label">How it works</div>
+        <h2>Three steps to a perfect document.</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Describe</div>
+            <div class="step-desc">Tell us what you need in plain language. No forms to fill out yet, no templates to hunt for.</div>
+            <div class="step-quote">"I need a freelance contract with payment terms and IP rights."</div>
+          </div>
         </div>
-
-        <div class="group p-8 rounded-3xl border-2 border-gray-100 hover:border-[#4257cd] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 bg-white">
-          <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-[#4257cd] text-2xl font-black group-hover:bg-[#4257cd] group-hover:text-white transition-colors">2</div>
-          <h3 class="text-2xl font-bold mb-4 text-slate-900">Generate</h3>
-          <p class="text-gray-600 text-lg leading-relaxed">
-            Groq's Llama 3 builds the structure. Spring Boot creates dynamic forms. Angular renders the interface instantly.
-          </p>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Generate</div>
+            <div class="step-desc">Groq's Llama 3 builds the legal structure. A dynamic form appears instantly for you to fill in your specific details.</div>
+          </div>
         </div>
-
-        <div class="group p-8 rounded-3xl border-2 border-gray-100 hover:border-[#4257cd] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 bg-white">
-          <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-[#4257cd] text-2xl font-black group-hover:bg-[#4257cd] group-hover:text-white transition-colors">3</div>
-          <h3 class="text-2xl font-bold mb-4 text-slate-900">Deliver</h3>
-          <p class="text-gray-600 text-lg leading-relaxed">
-            Fill the form once. Flying Saucer renders pixel-perfect PDF. Instant email delivery. Done.
-          </p>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Deliver</div>
+            <div class="step-desc">Submit the form. Flying Saucer renders a pixel-perfect PDF. It lands in your inbox — or download it immediately.</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="py-24 px-4 bg-[#f8fafc]">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-4xl md:text-5xl font-black text-center mb-16 text-slate-900 tracking-tight">
-        Technical Superiority
-      </h2>
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="features-header">
+      <div class="section-label">Technical superiority</div>
+      <h2>Built to last. Built to scale.</h2>
+    </div>
+    <div class="features-grid">
 
-      <div class="grid md:grid-cols-2 gap-6">
-
-        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow flex gap-6 items-start">
-          <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center flex-shrink-0 text-[#4257cd]">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">Zero-code flexibility</h3>
-            <p class="text-gray-600 leading-relaxed">Backend returns JSON structure. Frontend builds forms dynamically. Change a contract? It rebuilds automatically.</p>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <div>
+          <div class="feature-title">Zero-code flexibility</div>
+          <div class="feature-desc">Backend returns JSON structure. Frontend builds forms dynamically. Change a contract? It rebuilds automatically — no dev needed.</div>
+          <div class="feature-stack">
+            <span class="tag">Angular 17</span>
+            <span class="tag">Dynamic Forms</span>
           </div>
         </div>
-
-        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow flex gap-6 items-start">
-          <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center flex-shrink-0 text-[#4257cd]">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">LLM-powered templates</h3>
-            <p class="text-gray-600 leading-relaxed">Groq generates legal structures on-demand. System prompt engineering ensures valid, complete documents every time.</p>
-          </div>
-        </div>
-
-        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow flex gap-6 items-start">
-          <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center flex-shrink-0 text-[#4257cd]">
-             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">Production PDF</h3>
-            <p class="text-gray-600 leading-relaxed">Flying Saucer HTML-to-PDF respects every CSS rule. Headers, footers, page breaks—pixel-perfect output.</p>
-          </div>
-        </div>
-
-        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow flex gap-6 items-start">
-          <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center flex-shrink-0 text-[#4257cd]">
-             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">Enterprise stack</h3>
-            <p class="text-gray-600 leading-relaxed">Angular 17 + Material Design. Spring Boot 3. PostgreSQL. Groq API. Battle-tested architecture.</p>
-          </div>
-        </div>
-
       </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </div>
+        <div>
+          <div class="feature-title">LLM-powered templates</div>
+          <div class="feature-desc">Groq generates legal structures on-demand. System prompt engineering ensures valid, complete, jurisdiction-aware documents every time.</div>
+          <div class="feature-stack">
+            <span class="tag">Groq API</span>
+            <span class="tag">Llama 3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+          <div class="feature-title">Production-grade PDF</div>
+          <div class="feature-desc">Flying Saucer HTML-to-PDF respects every CSS rule. Headers, footers, page breaks — pixel-perfect output every single time.</div>
+          <div class="feature-stack">
+            <span class="tag">Flying Saucer</span>
+            <span class="tag">CSS Print</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+        </div>
+        <div>
+          <div class="feature-title">Enterprise stack</div>
+          <div class="feature-desc">Angular 17 + Material Design. Spring Boot 3. PostgreSQL. Battle-tested architecture that scales with your team.</div>
+          <div class="feature-stack">
+            <span class="tag">Spring Boot 3</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Material</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <section class="py-24 px-4 bg-[#4257cd] text-center">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-5xl md:text-6xl font-black mb-6 text-white tracking-tight">
-        Start in 30 seconds.
-      </h2>
-      <p class="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-        No credit card. No setup. Just describe what you need and watch it build.
-      </p>
-      <a routerLink="/register" class="inline-block px-12 py-5 bg-white text-[#4257cd] rounded-xl font-bold text-lg hover:shadow-2xl hover:bg-gray-50 hover:-translate-y-1 transition-all">
-        Get Started Free
-      </a>
-    </div>
-  </section>
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Start in 30 seconds.</h2>
+    <p>No credit card. No setup. Just describe what you need and watch it build.</p>
+    <a href="/register" class="btn-white">Get Started Free</a>
+    <div class="cta-note">Free to use · No card required · Works in your browser</div>
+  </div>
 
-  <footer class="py-8 px-4 bg-white border-t border-gray-200">
-    <div class="max-w-5xl mx-auto text-center">
-      <p class="text-gray-400 font-medium">© 2025 DocuGen Pro — Built to kill document bureaucracy</p>
-    </div>
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">DocuGen<span class="dot">Pro</span></span>
+    <p>© 2025 DocuGen Pro — Built to kill document bureaucracy.</p>
   </footer>
 
-</div>
+</body>
+</html>
