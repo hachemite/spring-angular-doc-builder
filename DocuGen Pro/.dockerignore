@@ -1,0 +1,6 @@
+target/
+.mvn/
+.git/
+.idea/
+.vscode/
+*.log
