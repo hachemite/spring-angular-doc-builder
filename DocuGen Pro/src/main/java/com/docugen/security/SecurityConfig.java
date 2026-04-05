@@ -34,19 +34,19 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        // 1. Allow OPTIONS requests for CORS preflight checks (Fixes the 403 on browser)
+                        // --- 1. ALLOW SWAGGER & OPENAPI (ADD THESE LINES) ---
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+
+                        // --- 2. Keep your existing public endpoints ---
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-
-                        // 2. Public Endpoints
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/payments/webhook").permitAll()
 
-                        // 3. Admin Only Endpoints
+                        // --- 3. Rest of your logic ---
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
-
-                        // 4. User & Admin Endpoints
-                        .requestMatchers("/api/documents/**", "/api/templates/**").authenticated()
-
-                        // 5. Catch-all
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess

@@ -1,7 +1,22 @@
 <div class="p-8 min-h-screen bg-gray-50">
 
-  <h1 class="text-3xl font-bold text-gray-800 mb-2">Select a Document</h1>
+<h1 class="text-3xl font-bold text-gray-800 mb-2">Select a Document</h1>
   <p class="text-gray-600 mb-8">Choose a template to start generating your legal document.</p>
+
+  <div *ngIf="!isPro" class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-6 md:p-8 text-white mb-8 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl border border-slate-700">
+    <div class="flex items-center gap-5">
+      <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-brand-500 rounded-full flex items-center justify-center shadow-lg shrink-0">
+        <mat-icon class="text-white">workspace_premium</mat-icon>
+      </div>
+      <div>
+        <h2 class="text-xl md:text-2xl font-bold text-white mb-1 tracking-tight">Unlock Pro Templates</h2>
+        <p class="text-slate-400 text-sm md:text-base">Get unlimited access to premium legal structures and priority AI generation.</p>
+      </div>
+    </div>
+    <a routerLink="/pricing" class="w-full md:w-auto text-center px-8 py-3 bg-white text-slate-900 rounded-xl font-bold hover:bg-slate-50 hover:scale-105 transition-all shadow-lg shrink-0">
+      View Pricing
+    </a>
+  </div>
 
   <div *ngIf="loading" class="flex justify-center mt-10">
     <mat-spinner diameter="50"></mat-spinner>
@@ -13,15 +28,29 @@
     <p class="text-sm text-gray-400">Please ask an Admin to create one.</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @for (t of templates; track t.id) {
       <mat-card class="hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-200"
-                (click)="openTemplate(t.id)">
+                (click)="openTemplate(t)">
         <mat-card-header class="bg-blue-50 p-4 border-b border-gray-100">
           <div mat-card-avatar class="bg-blue-600 rounded-full flex items-center justify-center text-white">
             <mat-icon>description</mat-icon>
           </div>
-          <mat-card-title class="mt-1 text-blue-900">{{ t.name }}</mat-card-title>
+
+<mat-card-title class="mt-1 text-blue-900">
+  <div class="flex items-center gap-2 flex-wrap">
+    <span class="font-semibold text-base leading-snug">{{ t.name }}</span>
+
+    <span *ngIf="t.premium" class="pro-badge">
+      <mat-icon>star</mat-icon> PRO
+    </span>
+
+    <span *ngIf="!t.premium" class="free-badge">
+      FREE
+    </span>
+  </div>
+</mat-card-title>
+
         </mat-card-header>
 
         <mat-card-content class="p-4 min-h-[80px]">
@@ -30,10 +59,12 @@
           </p>
         </mat-card-content>
 
+
         <mat-card-actions align="end" class="p-2 border-t border-gray-100">
           <button mat-button color="primary">START</button>
         </mat-card-actions>
       </mat-card>
+
     }
   </div>
 </div>

@@ -1,6 +1,7 @@
 package com.docugen.entity;
 
 import com.docugen.model.Role;
+import com.docugen.model.SubscriptionTier;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -38,7 +39,17 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    // Optional: Bidirectional mapping (useful for retrieving all docs by a user)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private SubscriptionTier tier = SubscriptionTier.FREE;
+
+    @Column(name = "stripe_customer_id")
+    private String stripeCustomerId;
+
+    @Column(name = "stripe_subscription_id")
+    private String stripeSubscriptionId;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DocumentRequest> documentRequests;
 }

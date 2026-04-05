@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DocumentService } from '../../../core/service/document';
 import { Router, ActivatedRoute } from '@angular/router'; // Added ActivatedRoute
+import { AuthService } from '../../../core/service/auth';
 
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
@@ -45,6 +46,8 @@ export class TemplateBuilderComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute); // Inject Route to get ID
 
+  public authService = inject(AuthService);
+
   // State
   isEditMode = false;
   templateId: number | null = null;
@@ -55,11 +58,12 @@ export class TemplateBuilderComponent implements OnInit {
   fieldTypes = ['TEXT', 'NUMBER', 'DATE', 'SELECT', 'CHECKBOX', 'SIGNATURE'];
 
   // Main Form
-  templateForm: FormGroup = this.fb.group({
+templateForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     description: [''],
     contentHtml: ['', Validators.required],
     active: [true],
+    premium: [false],
     fields: this.fb.array([])
   });
 
@@ -98,11 +102,12 @@ export class TemplateBuilderComponent implements OnInit {
     this.docService.getTemplateById(id).subscribe({
       next: (data) => {
         // A. Patch Top-Level Fields
-        this.templateForm.patchValue({
+this.templateForm.patchValue({
           name: data.name,
           description: data.description,
           contentHtml: data.contentHtml,
-          active: data.active
+          active: data.active,
+          premium: data.premium
         });
 
         // B. Rebuild FormArray

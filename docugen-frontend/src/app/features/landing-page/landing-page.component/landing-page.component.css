@@ -1,0 +1,543 @@
+// landing-page.component.scss
+// All styles are prefixed with .lp- to be completely isolated from Material and Tailwind
+
+// ── VARIABLES ──────────────────────────────────────────────────────────────
+$blue:       #3a4fd4;
+$blue-dark:  #2a3bb0;
+$blue-light: #eef0fb;
+$ink:        #0f1117;
+$muted:      #6b7280;
+$border:     #e5e7eb;
+$white:      #ffffff;
+$off:        #f9fafb;
+
+// ── FONTS ──────────────────────────────────────────────────────────────────
+// Applied via :host so it scopes only to this component
+:host {
+  display: block;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ── ROOT ───────────────────────────────────────────────────────────────────
+.lp-root {
+  background: $white;
+  color: $ink;
+  overflow-x: hidden;
+}
+
+// ── TYPOGRAPHY ─────────────────────────────────────────────────────────────
+.lp-h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: $ink;
+  margin-bottom: 24px;
+
+  em {
+    font-style: italic;
+    color: $blue;
+  }
+}
+
+.lp-h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $ink;
+  margin-bottom: 16px;
+}
+
+.lp-section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $blue;
+  margin-bottom: 16px;
+}
+
+.lp-body-lg {
+  font-size: 1.05rem;
+  color: $muted;
+  line-height: 1.7;
+}
+
+.lp-centered { text-align: center; }
+
+// ── SECTION HEADER ─────────────────────────────────────────────────────────
+.lp-section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+// ── HERO ───────────────────────────────────────────────────────────────────
+.lp-hero-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.lp-hero {
+  padding: 120px 0 90px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.lp-hero-left {
+  animation: lpFadeUp 0.6s ease both;
+}
+
+.lp-hero-visual {
+  position: relative;
+  animation: lpFadeUp 0.6s ease 0.15s both;
+}
+
+// Hero badge
+.lp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid $border;
+  background: $off;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: $muted;
+  margin-bottom: 28px;
+}
+.lp-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+// Hero sub
+.lp-sub {
+  font-size: 1.1rem;
+  color: $muted;
+  line-height: 1.7;
+  margin-bottom: 36px;
+  font-weight: 400;
+}
+
+// CTA row
+.lp-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+// ── BUTTONS ────────────────────────────────────────────────────────────────
+.lp-btn-primary {
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: $blue;
+  color: white;
+  box-shadow: 0 4px 20px rgba(58, 79, 212, 0.3);
+  transition: all 0.2s;
+  display: inline-block;
+
+  &:hover {
+    background: $blue-dark;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(58, 79, 212, 0.35);
+  }
+}
+
+.lp-btn-outline {
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid $border;
+  color: $ink;
+  background: white;
+  transition: all 0.2s;
+  display: inline-block;
+
+  &:hover {
+    border-color: $blue;
+    color: $blue;
+  }
+}
+
+.lp-btn-white {
+  display: inline-block;
+  padding: 14px 32px;
+  background: white;
+  color: $blue;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// ── DOCUMENT CARD MOCKUP ───────────────────────────────────────────────────
+.lp-doc-card {
+  background: white;
+  border: 1px solid $border;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
+  animation: lpFloat 6s ease-in-out infinite;
+}
+
+.lp-doc-header {
+  background: $off;
+  border-bottom: 1px solid $border;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lp-dots {
+  display: flex;
+  gap: 6px;
+}
+.lp-dot-r { width: 10px; height: 10px; border-radius: 50%; background: #f87171; display: block; }
+.lp-dot-y { width: 10px; height: 10px; border-radius: 50%; background: #fbbf24; display: block; }
+.lp-dot-g { width: 10px; height: 10px; border-radius: 50%; background: #4ade80; display: block; }
+
+.lp-doc-label {
+  font-size: 0.78rem;
+  color: $muted;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.lp-doc-body {
+  padding: 24px;
+}
+
+.lp-line {
+  height: 10px;
+  border-radius: 4px;
+  background: $border;
+  margin-bottom: 10px;
+}
+.lp-line-title { height: 14px; width: 50%; background: #c7cef5; margin-bottom: 18px; }
+.lp-line-short { width: 55%; }
+.lp-line-med   { width: 75%; }
+.lp-line-long  { width: 90%; }
+
+.lp-divider {
+  border: none;
+  border-top: 1px solid $border;
+  margin: 16px 0;
+}
+
+.lp-field {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.lp-field-lbl { height: 10px; width: 80px; border-radius: 4px; background: #c7cef5; flex-shrink: 0; }
+.lp-field-val { height: 10px; flex: 1; border-radius: 4px; background: $border; }
+.lp-fv-short  { width: 60%; flex: none; }
+
+.lp-ready-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: $blue-light;
+  color: $blue;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 8px;
+
+  svg { width: 12px; height: 12px; }
+}
+
+.lp-float-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -24px;
+  background: white;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $ink;
+}
+
+// ── TRUST STRIP ────────────────────────────────────────────────────────────
+.lp-strip {
+  background: $off;
+  border-top: 1px solid $border;
+  border-bottom: 1px solid $border;
+  padding: 20px 40px;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.lp-strip-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: $muted;
+
+  svg { color: $blue; }
+}
+
+// ── PROBLEM ────────────────────────────────────────────────────────────────
+.lp-problem {
+  padding: 96px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.lp-pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.lp-pain-card {
+  background: white;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: left;
+}
+
+.lp-pain-icon { font-size: 1.5rem; margin-bottom: 12px; }
+
+.lp-pain-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: $ink;
+  margin-bottom: 6px;
+}
+
+.lp-strike {
+  text-decoration: line-through;
+  color: #f87171;
+}
+
+.lp-pain-desc {
+  font-size: 0.85rem;
+  color: $muted;
+  line-height: 1.6;
+}
+
+// ── STEPS ──────────────────────────────────────────────────────────────────
+.lp-steps {
+  padding: 96px 40px;
+  background: $off;
+  border-top: 1px solid $border;
+}
+
+.lp-steps-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.lp-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 16%;
+    right: 16%;
+    height: 1px;
+    background: repeating-linear-gradient(
+      to right,
+      $blue 0,
+      $blue 6px,
+      transparent 6px,
+      transparent 14px
+    );
+    opacity: 0.3;
+  }
+}
+
+.lp-step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.lp-step-num {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $blue;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.lp-step-title { font-weight: 700; font-size: 1.1rem; color: $ink; margin-bottom: 6px; }
+.lp-step-desc  { font-size: 0.9rem; color: $muted; line-height: 1.7; }
+.lp-step-quote {
+  font-style: italic;
+  color: $blue;
+  font-size: 0.85rem;
+  border-left: 2px solid $blue-light;
+  padding-left: 12px;
+  margin-top: 6px;
+}
+
+// ── FEATURES ───────────────────────────────────────────────────────────────
+.lp-features {
+  padding: 96px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.lp-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.lp-feature-card {
+  background: white;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 28px 32px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+
+  &:hover {
+    border-color: $blue;
+    box-shadow: 0 8px 30px rgba(58, 79, 212, 0.08);
+    transform: translateY(-2px);
+  }
+}
+
+.lp-feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: $blue-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: $blue;
+}
+
+.lp-feature-title { font-weight: 700; font-size: 1rem; color: $ink; margin-bottom: 6px; }
+.lp-feature-desc  { font-size: 0.88rem; color: $muted; line-height: 1.65; }
+
+.lp-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.lp-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: $off;
+  border: 1px solid $border;
+  color: $muted;
+}
+
+// ── CTA ────────────────────────────────────────────────────────────────────
+.lp-cta {
+  margin: 40px;
+  border-radius: 20px;
+  background: $blue;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.lp-cta-h {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  color: white;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.lp-cta-sub {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.05rem;
+  margin-bottom: 36px;
+}
+
+.lp-cta-note {
+  margin-top: 16px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+// ── ANIMATIONS ─────────────────────────────────────────────────────────────
+@keyframes lpFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lpFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+// ── RESPONSIVE ─────────────────────────────────────────────────────────────
+@media (max-width: 900px) {
+  .lp-hero {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 100px 0 60px;
+  }
+  .lp-hero-visual { display: none; }
+  .lp-pain-grid, .lp-steps-grid, .lp-features-grid { grid-template-columns: 1fr; }
+  .lp-steps-grid::before { display: none; }
+  .lp-cta { margin: 20px; padding: 60px 24px; }
+  .lp-strip { gap: 24px; padding: 20px 24px; }
+  .lp-problem { padding: 64px 24px; }
+  .lp-steps, .lp-features { padding: 64px 24px; }
+  .lp-hero-wrap { padding: 0 24px; }
+}

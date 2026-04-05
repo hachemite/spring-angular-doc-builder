@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -42,7 +45,6 @@ public class AuthController {
 
         userRepository.save(user);
 
-        // Generate token with role included
         var userDetails = new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
@@ -51,7 +53,13 @@ public class AuthController {
                 )
         );
 
-        var jwtToken = jwtService.generateToken(userDetails, user.getRole().name());
+        // ✅ FIX: Put the Tier in the JWT Token
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", user.getRole().name());
+        extraClaims.put("authorities", "ROLE_" + user.getRole().name());
+        extraClaims.put("tier", user.getTier().name());
+
+        var jwtToken = jwtService.generateToken(extraClaims, userDetails);
         return ResponseEntity.ok(AuthResponse.builder().token(jwtToken).build());
     }
 
@@ -75,7 +83,13 @@ public class AuthController {
                 )
         );
 
-        var jwtToken = jwtService.generateToken(userDetails, user.getRole().name());
+        // ✅ FIX: Put the Tier in the JWT Token
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", user.getRole().name());
+        extraClaims.put("authorities", "ROLE_" + user.getRole().name());
+        extraClaims.put("tier", user.getTier().name());
+
+        var jwtToken = jwtService.generateToken(extraClaims, userDetails);
         return ResponseEntity.ok(AuthResponse.builder().token(jwtToken).build());
     }
 }

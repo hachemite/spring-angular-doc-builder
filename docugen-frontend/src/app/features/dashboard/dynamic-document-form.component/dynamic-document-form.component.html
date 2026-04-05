@@ -9,24 +9,34 @@
 
     <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
 
-      <div class="bg-brand-600 p-6 flex items-center gap-5 relative overflow-hidden">
+  <div [ngClass]="isPro ? 'bg-gradient-to-r from-slate-900 to-slate-800' : 'bg-brand-600'" 
+     class="p-6 flex items-center gap-5 relative overflow-hidden">
 
-        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-white opacity-5 rounded-full blur-2xl pointer-events-none"></div>
+  <div class="absolute inset-0 pointer-events-none"
+       style="background: radial-gradient(ellipse at 80% -20%, rgba(99,102,241,0.15) 0%, transparent 60%)"></div>
 
-        <div class="h-14 w-14 bg-white rounded-full flex items-center justify-center shadow-lg shadow-brand-900/20 shrink-0 z-10">
-          <mat-icon class="text-brand-600 scale-110 !w-7 !h-7 !text-[28px] !leading-[28px]">description</mat-icon>
-        </div>
+  <div class="h-12 w-12 rounded-xl flex items-center justify-center shrink-0 z-10"
+       style="background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.12)">
+    <mat-icon class="!w-6 !h-6 !text-[22px] !leading-[22px]"
+              [ngClass]="isPro ? 'text-slate-300' : 'text-white'">description</mat-icon>
+  </div>
 
-        <div class="z-10 flex-1">
-          <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight leading-tight">
-            {{ template.name }}
-          </h1>
-          <p class="text-brand-100 mt-0.5 text-sm font-medium leading-relaxed opacity-90">
-            {{ template.description || 'Fill in the details below to generate your document.' }}
-          </p>
-        </div>
-      </div>
+  <div class="z-10 flex-1">
+    <div class="flex items-center gap-2 mb-1">
+      <h1 class="text-lg md:text-xl font-semibold text-white tracking-tight leading-tight">
+        {{ template.name }}
+      </h1>
+      <span *ngIf="isPro" class="pro-badge">
+        <mat-icon style="font-size: 10px; width: 10px; height: 10px; line-height: 10px;">star</mat-icon>
+        PRO
+      </span>
+    </div>
+    <p class="text-sm font-normal leading-relaxed"
+       [ngClass]="isPro ? 'text-slate-400' : 'text-brand-100'">
+      {{ template.description || 'Fill in the details below to generate your document.' }}
+    </p>
+  </div>
+</div>
 
       <div class="p-6">
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
@@ -148,8 +158,12 @@
                 <mat-icon *ngIf="!isSubmitting" class="text-sm">send</mat-icon>
               </div>
             </button>
-            <p class="text-center text-[10px] text-slate-400 mt-3 flex items-center justify-center gap-1">
-              <mat-icon class="text-[10px] h-3 w-3">lock</mat-icon> Securely processed by DocuGen Pro Engine
+            
+            <p *ngIf="!isPro" class="text-center text-[10px] text-slate-400 mt-3 flex items-center justify-center gap-1">
+              <mat-icon class="text-[10px] h-3 w-3">lock</mat-icon> Securely processed by DocuGen Engine
+            </p>
+            <p *ngIf="isPro" class="text-center text-[10px] text-yellow-600 mt-3 flex items-center justify-center gap-1 font-bold">
+              <mat-icon class="text-[10px] h-3 w-3">bolt</mat-icon> Priority Processing for PRO Members
             </p>
           </div>
 

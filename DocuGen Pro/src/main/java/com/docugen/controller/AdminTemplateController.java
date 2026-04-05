@@ -60,6 +60,7 @@ public class AdminTemplateController {
                 .description(request.getDescription())
                 .contentHtml(request.getContentHtml())
                 .active(request.isActive())
+                .isPremium(request.isPremium())
                 .build();
 
         if (request.getFields() != null) {
@@ -91,7 +92,7 @@ public class AdminTemplateController {
         template.setDescription(request.getDescription());
         template.setContentHtml(request.getContentHtml());
         template.setActive(request.isActive());
-
+        template.setPremium(request.isPremium());
         // Update fields: Clear existing and add new
         // The orphanRemoval=true in Entity ensures old fields are deleted from DB
         template.getFields().clear();

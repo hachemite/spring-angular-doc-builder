@@ -7,7 +7,7 @@ import { DynamicDocumentFormComponent } from './features/dashboard/dynamic-docum
 import { AdminTemplateListComponent } from './features/admin/admin-template-list.component/admin-template-list.component';
 // 1. Import Landing Page
 import { LandingPageComponent } from './features/landing-page/landing-page.component/landing-page.component';
-
+import { PricingComponent } from './features/pricing/pricing.component';
 import { authGuard } from './core/guard/auth-guard';
 import { adminGuard } from './core/guard/admin-guard';
 
@@ -46,5 +46,11 @@ export const routes: Routes = [
     path: 'document/:id',
     component: DynamicDocumentFormComponent,
     canActivate: [authGuard]
-  }
+  },
+
+  {
+  path: 'pricing',
+  component: PricingComponent,
+  canActivate: [authGuard]
+}
 ];

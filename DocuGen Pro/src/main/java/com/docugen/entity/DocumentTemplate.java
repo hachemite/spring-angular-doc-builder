@@ -31,7 +31,10 @@ public class DocumentTemplate {
     @Builder.Default
     private boolean active = true;
 
-    // CRITICAL: orphanRemoval = true is required for proper updates/deletes
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isPremium = false;
+
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<FormField> fields = new ArrayList<>();

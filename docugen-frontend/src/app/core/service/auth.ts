@@ -39,12 +39,6 @@ export class AuthService {
     );
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('userEmail');
-    this.router.navigate(['/login']);
-  }
 
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
@@ -56,10 +50,13 @@ export class AuthService {
     return role === 'ADMIN';
   }
 
+isPro(): boolean {
+    return localStorage.getItem('userTier') === 'PRO';
+  }
+
   private storeUserInfo(token: string): void {
     localStorage.setItem('token', token);
 
-    // Decode JWT to get user role
     try {
       const payload = this.decodeToken(token);
       if (payload.role) {
@@ -68,9 +65,21 @@ export class AuthService {
       if (payload.sub) {
         localStorage.setItem('userEmail', payload.sub);
       }
+      // Add this block to save the tier
+      if (payload.tier) {
+        localStorage.setItem('userTier', payload.tier);
+      }
     } catch (e) {
       console.error('Error decoding token:', e);
     }
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userTier'); // Don't forget to clear it
+    this.router.navigate(['/login']);
   }
 
   private decodeToken(token: string): any {

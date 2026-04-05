@@ -68,6 +68,11 @@ export class App {
     return this.authService.isAdmin();
   }
 
+  get isPro(): boolean {
+    return this.authService.isPro();
+  }
+
+
   logout() {
     this.authService.logout();
   }
